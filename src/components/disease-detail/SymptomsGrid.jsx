@@ -1,24 +1,38 @@
 function SymptomsGrid({ symptoms }) {
+  const hasSymptoms = Array.isArray(symptoms) && symptoms.length > 0;
+
   return (
-    <section className="mb-12">
-      <h3 className="mb-6 flex items-center gap-2 text-2xl font-bold text-slate-900">
-        <span className="material-symbols-outlined text-primary">warning</span>
+    <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+      <h3 className="mb-6 flex items-center gap-2 text-2xl font-extrabold tracking-tight text-slate-900">
+        <span className="material-symbols-outlined text-primary">symptoms</span>
         Common Symptoms
       </h3>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {symptoms.map((symptom) => (
-          <div
-            key={symptom.title}
-            className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-          >
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <span className="material-symbols-outlined">{symptom.icon}</span>
+      {hasSymptoms ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {symptoms.map((symptom) => (
+            <div
+              key={symptom.title}
+              className="group rounded-xl border border-slate-200 bg-slate-50/60 p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:bg-white hover:shadow-md"
+            >
+              <div className="mb-2 flex items-center gap-2.5">
+                <span className="material-symbols-outlined rounded-full bg-primary/10 p-1.5 text-base text-primary transition-colors group-hover:bg-primary/15">
+                  pulse_alert
+                </span>
+                <h4 className="text-base font-bold text-slate-900">
+                  {symptom.title}
+                </h4>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-600">
+                {symptom.description}
+              </p>
             </div>
-            <h4 className="font-bold text-slate-900">{symptom.title}</h4>
-            <p className="mt-1 text-sm text-slate-500">{symptom.detail}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
+          Symptoms are not available for this disease yet.
+        </div>
+      )}
     </section>
   );
 }

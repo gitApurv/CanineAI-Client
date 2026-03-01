@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import DynamicInfoCard from "../components/common/DynamicInfoCard";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import { useAuth } from "../context/AuthContext";
 
 const featureItems = [
   {
@@ -54,14 +56,17 @@ const stepItems = [
 ];
 
 function LandingPage() {
+  const navigate = useNavigate();
+  const { isUserLoggedIn } = useAuth();
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
       <div className="relative flex min-h-screen w-full flex-col">
         <Navbar />
 
         <main className="flex-1 pt-[72px]">
-          <section>
-            <div className="mx-auto grid max-w-[1440px] grid-cols-1 items-center gap-10 px-4 py-12 lg:grid-cols-2 lg:px-40 lg:py-20">
+          <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+            <div className="mx-auto grid max-w-[1440px] grid-cols-1 items-center gap-12 px-4 py-14 lg:grid-cols-2 lg:px-40 lg:py-24">
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-4 text-left">
                   <h1 className="text-4xl font-extrabold leading-tight tracking-[-0.033em] text-slate-900 @[480px]:text-5xl lg:text-6xl">
@@ -81,13 +86,19 @@ function LandingPage() {
                   <button
                     className="flex h-12 min-w-[140px] items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold leading-normal tracking-[0.015em] text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                     type="button"
+                    onClick={() =>
+                      navigate(isUserLoggedIn ? "/dashboard" : "/login")
+                    }
                   >
-                    <span className="truncate">Get Started</span>
+                    <span className="truncate">
+                      {isUserLoggedIn ? "Go to Dashboard" : "Get Started"}
+                    </span>
                   </button>
 
                   <button
                     className="flex h-12 min-w-[140px] items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white px-6 text-base font-bold leading-normal tracking-[0.015em] text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                     type="button"
+                    onClick={() => navigate("/diseases")}
                   >
                     <span className="truncate">Explore Diseases</span>
                   </button>
@@ -100,19 +111,16 @@ function LandingPage() {
               </div>
 
               <div className="relative flex w-full justify-center lg:justify-end">
-                <div className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-blue-100 to-teal-50 opacity-60 blur-3xl"></div>
+                <div className="absolute left-1/2 top-1/2 -z-10 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-blue-100 via-cyan-50 to-teal-100 opacity-70 blur-3xl"></div>
 
-                <div className="relative aspect-square w-full max-w-[500px] overflow-hidden rounded-2xl border-4 border-white bg-white shadow-2xl">
+                <div className="relative aspect-square w-full max-w-[520px] overflow-hidden rounded-3xl border-4 border-white bg-white shadow-2xl shadow-slate-300/40">
                   <img
                     alt="Golden retriever dog with stethoscope looking healthy"
                     className="h-full w-full object-cover object-top"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZQAorUcEy0ScdlMdKUZPzqmfubPiPSM5O31C0RzlPQEzFZil-IBXzgK-MBJ16WlXfihDVs4jv5xJupnauESZc4T_fBbri820FVCN73obJQPr7gfoyfcbUHXB_5bLQ1EbR2TfBn-CssoN_P9Ce-6C299OKx701ZEHwl3X8blSmYumlbdR7bGPKzF8jaKFetB2v9Dfb_kOyi_dlCc0mRlIuOOXgK2ZsvJIr01fTEIGjirtwgI6JdvkZN5I4l0WP-lxykCA1wDCAZMko"
                   />
-
-                  <div
-                    className="absolute left-8 top-8 flex animate-bounce items-center gap-3 rounded-lg bg-white p-3 shadow-lg"
-                    style={{ animationDuration: "3s" }}
-                  >
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
+                  <div className="hero-tooltip hero-tooltip--top absolute left-6 top-6 flex items-center gap-3 rounded-xl bg-white/95 p-3.5 shadow-xl backdrop-blur-sm">
                     <div className="rounded-full bg-green-100 p-2 text-green-600">
                       <span className="material-symbols-outlined text-xl">
                         check_circle
@@ -127,11 +135,7 @@ function LandingPage() {
                       </p>
                     </div>
                   </div>
-
-                  <div
-                    className="absolute bottom-8 right-8 flex animate-bounce items-center gap-3 rounded-lg bg-white p-3 shadow-lg"
-                    style={{ animationDuration: "3s" }}
-                  >
+                  <div className="hero-tooltip hero-tooltip--bottom absolute bottom-6 right-6 flex items-center gap-3 rounded-xl bg-white/95 p-3.5 shadow-xl backdrop-blur-sm">
                     <div className="rounded-full bg-blue-100 p-2 text-blue-600">
                       <span className="material-symbols-outlined text-xl">
                         analytics
@@ -143,7 +147,7 @@ function LandingPage() {
                       </p>
                       <p className="text-sm font-bold text-slate-900">98.5%</p>
                     </div>
-                  </div>
+                  </div>{" "}
                 </div>
               </div>
             </div>
@@ -180,35 +184,37 @@ function LandingPage() {
           </section>
 
           <section className="mx-auto max-w-[1440px] px-4 py-20 lg:px-40">
-            <div className="mb-16 text-center">
-              <h2 className="mb-4 text-3xl font-extrabold text-slate-900">
-                How It Works
-              </h2>
-              <p className="mx-auto max-w-2xl text-slate-600">
-                Get peace of mind in three simple steps.
-              </p>
-            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-12">
+              <div className="mb-14 text-center">
+                <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
+                  How It Works
+                </h2>
+                <p className="mx-auto max-w-2xl text-slate-600">
+                  Get peace of mind in three simple steps.
+                </p>
+              </div>
 
-            <div className="relative">
-              <div className="absolute left-0 right-0 top-8 hidden h-1 bg-slate-200 md:block"></div>
+              <div className="relative mx-auto max-w-3xl">
+                <div className="absolute bottom-4 left-6 top-4 w-px bg-gradient-to-b from-blue-200 via-primary/50 to-blue-100"></div>
 
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-4">
-                {stepItems.map((step, index) => (
-                  <div
-                    key={step.title}
-                    className="flex flex-col items-center text-center"
-                  >
-                    <div className="relative z-10 mb-6 flex size-16 items-center justify-center rounded-full border-4 border-primary bg-white text-2xl font-bold text-primary shadow-lg">
-                      {index + 1}
+                <div className="space-y-6">
+                  {stepItems.map((step, index) => (
+                    <div key={step.title} className="relative pl-16">
+                      <div className="absolute left-0 top-1.5 z-10 flex size-12 items-center justify-center rounded-full border-2 border-primary/20 bg-white text-lg font-extrabold text-primary shadow-sm">
+                        {index + 1}
+                      </div>
+
+                      <div className="group rounded-2xl border border-slate-200 bg-slate-50/60 p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:bg-white hover:shadow-md">
+                        <h3 className="mb-2 text-xl font-bold text-slate-900">
+                          {step.title}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-slate-600">
+                          {step.description}
+                        </p>
+                      </div>
                     </div>
-                    <h3 className="mb-2 text-xl font-bold text-slate-900">
-                      {step.title}
-                    </h3>
-                    <p className="px-4 text-sm text-slate-600">
-                      {step.description}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </section>
@@ -225,18 +231,32 @@ function LandingPage() {
               </p>
 
               <div className="mt-2 flex flex-col gap-4 sm:flex-row">
-                <button
-                  className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  type="button"
-                >
-                  Create Account
-                </button>
-                <button
-                  className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                  type="button"
-                >
-                  Login
-                </button>
+                {isUserLoggedIn ? (
+                  <button
+                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    onClick={() => navigate("/dashboard")}
+                    type="button"
+                  >
+                    Go to Dashboard
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      onClick={() => navigate("/signup")}
+                      type="button"
+                    >
+                      Create Account
+                    </button>
+                    <button
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                      onClick={() => navigate("/login")}
+                      type="button"
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </section>

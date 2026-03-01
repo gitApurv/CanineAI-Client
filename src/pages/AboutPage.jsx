@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import DynamicInfoCard from "../components/common/DynamicInfoCard";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import { useAuth } from "../context/AuthContext";
 
 const solutionItems = [
   {
@@ -92,19 +94,22 @@ const architectureItems = [
 ];
 
 function AboutPage() {
+  const navigate = useNavigate();
+  const { isUserLoggedIn } = useAuth();
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
       <div className="relative flex min-h-screen w-full flex-col">
         <Navbar />
 
         <main className="flex-1 pt-[72px]">
-          <section className="relative overflow-hidden bg-slate-50 py-16 lg:py-24">
-            <div className="absolute inset-0 bg-blue-50/50"></div>
+          <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-16 lg:py-24">
+            <div className="absolute inset-0 bg-blue-50/40"></div>
             <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary/10 blur-3xl"></div>
             <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl"></div>
 
             <div className="relative mx-auto max-w-[1440px] px-4 text-center lg:px-40">
-              <span className="mb-4 inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+              <span className="mb-5 inline-block rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
                 Our Mission
               </span>
               <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-5xl">
@@ -121,7 +126,7 @@ function AboutPage() {
 
           <section className="mx-auto max-w-[1440px] px-4 py-20 lg:px-40">
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-              <div className="flex flex-col gap-6">
+              <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-10">
                 <h2 className="text-3xl font-bold text-slate-900">
                   The Problem:{" "}
                   <span className="text-primary">Silent Symptoms</span>
@@ -147,17 +152,17 @@ function AboutPage() {
               </div>
 
               <div className="relative flex justify-center lg:justify-end">
-                <div className="relative aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-xl">
+                <div className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-blue-100 to-teal-100 opacity-70 blur-3xl"></div>
+
+                <div className="relative aspect-[4/3] w-full max-w-md overflow-hidden rounded-3xl border-4 border-white bg-white p-2 shadow-2xl shadow-slate-300/40">
                   <img
                     alt="Veterinarian examining a dog"
                     className="h-full w-full rounded-xl object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7aJby5_XfJ83FuTeKgxXC87JHK0-YKqcd9k2m_rPZ7Tdj7AjvlwdB8gDBFelnz2y-0fqhJO_4qQRlFiKYKJEJmSGS5rHzLKW0VOEuFS1vFlxpqVJkR2K6lskRuPRsGjATRUDCKVrA9Mw6n72XarcxCfGa0QjD_463qDJceOTozTnQVgCxed7Yy6IkfaJ7Wu9RepQ7l4FTsCTzsIFSEMYlT-mbhTk-F5xeFKgnlXBqMLjUDZCjuRO3sjvizufU_QeVZXsFeNBOT6H"
                   />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
 
-                  <div
-                    className="absolute bottom-6 left-6 flex animate-bounce items-center gap-3 rounded-lg border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur"
-                    style={{ animationDuration: "4s" }}
-                  >
+                  <div className="hero-tooltip hero-tooltip--top absolute bottom-6 left-6 flex items-center gap-3 rounded-xl border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur">
                     <div className="rounded-full bg-red-100 p-2 text-red-600">
                       <span className="material-symbols-outlined">warning</span>
                     </div>
@@ -167,6 +172,22 @@ function AboutPage() {
                       </p>
                       <p className="text-sm font-bold text-slate-900">
                         Delayed Diagnosis
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="hero-tooltip hero-tooltip--bottom absolute right-6 top-6 flex items-center gap-3 rounded-xl border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur">
+                    <div className="rounded-full bg-blue-100 p-2 text-blue-600">
+                      <span className="material-symbols-outlined">
+                        analytics
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase text-slate-500">
+                        AI Screening
+                      </p>
+                      <p className="text-sm font-bold text-slate-900">
+                        Early Insights
                       </p>
                     </div>
                   </div>
@@ -192,7 +213,7 @@ function AboutPage() {
                   <DynamicInfoCard
                     key={item.title}
                     item={item}
-                    cardClassName="group rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                    cardClassName="group rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-primary/20 hover:shadow-md"
                     iconWrapperClassName={`mb-6 flex h-14 w-14 items-center justify-center rounded-lg transition-colors ${item.iconBgClass}`}
                     titleClassName="mb-3 text-lg font-bold text-slate-900"
                     descriptionClassName="text-sm text-slate-600"
@@ -213,26 +234,28 @@ function AboutPage() {
               </p>
             </div>
 
-            <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 md:flex-row md:items-start md:justify-center md:gap-6">
-              <div className="pointer-events-none absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 bg-slate-200 md:left-0 md:right-0 md:top-16 md:h-1 md:w-auto md:translate-x-0 md:-translate-y-1/2"></div>
+            <div className="relative mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white px-8 py-12 shadow-sm">
+              <div className="relative mx-auto flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-center md:gap-6">
+                <div className="pointer-events-none absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 bg-slate-200 md:left-[12%] md:right-[12%] md:top-16 md:h-1 md:w-auto md:translate-x-0 md:-translate-y-1/2"></div>
 
-              {architectureItems.map((item) => (
-                <div
-                  key={item.title}
-                  className="group relative z-10 flex w-full max-w-[180px] flex-col items-center text-center"
-                >
+                {architectureItems.map((item) => (
                   <div
-                    className={`flex h-32 w-32 flex-col items-center justify-center rounded-full border-4 shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl ${item.containerClass}`}
+                    key={item.title}
+                    className="group relative z-10 flex w-full max-w-[180px] flex-col items-center text-center"
                   >
-                    <span
-                      className={`material-symbols-outlined mb-1 text-3xl ${item.iconClass}`}
+                    <div
+                      className={`flex h-32 w-32 flex-col items-center justify-center rounded-full border-4 shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl ${item.containerClass}`}
                     >
-                      {item.icon}
-                    </span>
-                    <span className="text-sm font-bold">{item.title}</span>
+                      <span
+                        className={`material-symbols-outlined mb-1 text-3xl ${item.iconClass}`}
+                      >
+                        {item.icon}
+                      </span>
+                      <span className="text-sm font-bold">{item.title}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </section>
 
@@ -249,7 +272,7 @@ function AboutPage() {
                   <DynamicInfoCard
                     key={item.title}
                     item={item}
-                    cardClassName="group rounded-xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                    cardClassName="group rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-primary/20 hover:shadow-md"
                     iconWrapperClassName={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors ${item.iconBgClass}`}
                     titleClassName="mb-2 text-xl font-bold text-slate-900"
                     descriptionClassName="leading-relaxed text-slate-600"
@@ -260,7 +283,7 @@ function AboutPage() {
           </section>
 
           <section className="mx-auto max-w-[1440px] px-4 py-12 lg:px-40">
-            <div className="flex flex-col items-start gap-6 rounded-xl border border-red-100 bg-red-50 p-8 md:flex-row md:items-center">
+            <div className="flex flex-col items-start gap-6 rounded-2xl border border-red-100 bg-red-50 p-8 shadow-sm md:flex-row md:items-center">
               <div className="shrink-0 rounded-full bg-red-100 p-3 text-red-600">
                 <span className="material-symbols-outlined text-3xl">
                   medical_information
@@ -288,18 +311,32 @@ function AboutPage() {
                 Ready to start monitoring your dog&apos;s health?
               </h2>
               <div className="mt-4 flex flex-col gap-4 sm:flex-row">
-                <button
-                  className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  type="button"
-                >
-                  Create Account
-                </button>
-                <button
-                  className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                  type="button"
-                >
-                  Login
-                </button>
+                {isUserLoggedIn ? (
+                  <button
+                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    onClick={() => navigate("/dashboard")}
+                    type="button"
+                  >
+                    Go to Dashboard
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      onClick={() => navigate("/signup")}
+                      type="button"
+                    >
+                      Create Account
+                    </button>
+                    <button
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                      onClick={() => navigate("/login")}
+                      type="button"
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </section>

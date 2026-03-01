@@ -1,59 +1,61 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import DiseasesFilters from "../components/diseases/DiseasesFilters";
 import DiseasesGrid from "../components/diseases/DiseasesGrid";
-import Pagination from "../components/diseases/Pagination";
-import { diseaseItems } from "../components/diseases/diseaseData";
-
-const PAGE_SIZE = 6;
+import { fetchDiseases } from "../services/DiseasesService";
 
 function DiseasesPage() {
+  const [diseases, setDiseases] = useState([]);
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All Categories");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadDiseases() {
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+        const items = await fetchDiseases();
+
+        if (isMounted && items.length > 0) {
+          setDiseases(items);
+        }
+      } catch {
+        if (isMounted) {
+          setErrorMessage("Unable to load diseases from the server.");
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadDiseases();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filteredDiseases = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return diseaseItems.filter((disease) => {
-      const matchesCategory =
-        category === "All Categories" || disease.category === category;
-
+    return diseases.filter((disease) => {
       const matchesQuery =
         normalizedQuery.length === 0 ||
-        disease.name.toLowerCase().includes(normalizedQuery) ||
-        disease.summary.toLowerCase().includes(normalizedQuery);
+        disease.title.toLowerCase().includes(normalizedQuery) ||
+        disease.shortDescription.toLowerCase().includes(normalizedQuery);
 
-      return matchesCategory && matchesQuery;
+      return matchesQuery;
     });
-  }, [category, query]);
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredDiseases.length / PAGE_SIZE),
-  );
-  const safePage = Math.min(currentPage, totalPages);
-  const startIndex = (safePage - 1) * PAGE_SIZE;
-  const pagedDiseases = filteredDiseases.slice(
-    startIndex,
-    startIndex + PAGE_SIZE,
-  );
-
-  const handleClear = () => {
-    setQuery("");
-    setCategory("All Categories");
-    setCurrentPage(1);
-  };
+  }, [diseases, query]);
 
   const handleQueryChange = (value) => {
     setQuery(value);
-    setCurrentPage(1);
-  };
-
-  const handleCategoryChange = (value) => {
-    setCategory(value);
-    setCurrentPage(1);
   };
 
   return (
@@ -80,21 +82,26 @@ function DiseasesPage() {
             </div>
           </section>
 
-          <DiseasesFilters
-            query={query}
-            category={category}
-            onQueryChange={handleQueryChange}
-            onCategoryChange={handleCategoryChange}
-            onClear={handleClear}
-          />
+          <DiseasesFilters query={query} onQueryChange={handleQueryChange} />
 
           <section className="mx-auto min-h-[600px] max-w-[1440px] px-4 py-12 lg:px-40">
-            <DiseasesGrid diseases={pagedDiseases} />
-            <Pagination
-              currentPage={safePage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
+            {errorMessage ? (
+              <div
+                aria-live="polite"
+                className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center"
+              >
+                <h3 className="text-lg font-semibold text-slate-900">
+                  Error Loading Diseases
+                </h3>
+                <p className="mt-2 text-sm text-slate-600">{errorMessage}</p>
+              </div>
+            ) : isLoading ? (
+              <div className="rounded-xl border border-slate-200 bg-white p-10 text-center">
+                <p className="text-sm text-slate-600">Loading diseases...</p>
+              </div>
+            ) : (
+              <DiseasesGrid diseases={filteredDiseases} />
+            )}
           </section>
         </main>
 

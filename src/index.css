@@ -16,3 +16,42 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes heroTooltipFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes heroTooltipPulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+  }
+  50% {
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.2);
+  }
+}
+
+.hero-tooltip {
+  animation:
+    heroTooltipFloat 3.4s ease-in-out infinite,
+    heroTooltipPulse 3.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-tooltip--top {
+  animation-delay: 0s;
+}
+
+.hero-tooltip--bottom {
+  animation-delay: 0.8s;
+}
+
+.hero-tooltip--center {
+  animation-delay: 1.4s;
+}
