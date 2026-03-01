@@ -51,36 +51,39 @@ function DiseaseDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background-light font-display text-slate-900">
-        <Navbar />
-        <main className="mx-auto max-w-3xl px-4 pt-[88px]">
-          <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-            <div className="mx-auto mb-4 h-10 w-10 animate-pulse rounded-full bg-primary/15"></div>
-            <p className="text-base font-medium text-slate-700">
-              Loading disease details...
-            </p>
-          </div>
-        </main>
-        <Footer />
+      <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
+        <div className="relative flex min-h-screen w-full flex-col">
+          <Navbar />
+          <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-[88px]">
+            <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+              <p className="text-base font-medium text-slate-700">
+                Loading disease details...
+              </p>
+            </div>
+          </main>
+          <Footer />
+        </div>
       </div>
     );
   }
 
   if (!detail) {
     return (
-      <div className="min-h-screen bg-background-light font-display text-slate-900">
-        <Navbar />
-        <main className="mx-auto max-w-3xl px-4 pt-[88px]">
-          <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-            <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-slate-900">
-              Disease not found
-            </h2>
-            <p className="text-slate-600">
-              The disease you are looking for is not available right now.
-            </p>
-          </div>
-        </main>
-        <Footer />
+      <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
+        <div className="relative flex min-h-screen w-full flex-col">
+          <Navbar />
+          <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-[88px]">
+            <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+              <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-slate-900">
+                Disease not found
+              </h2>
+              <p className="text-slate-600">
+                The disease you are looking for is not available right now.
+              </p>
+            </div>
+          </main>
+          <Footer />
+        </div>
       </div>
     );
   }

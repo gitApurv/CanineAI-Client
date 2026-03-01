@@ -11,18 +11,21 @@ function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [profilePreviewUrl, setProfilePreviewUrl] = useState("");
   const [uploadedProfileImageUrl, setUploadedProfileImageUrl] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { setIsUserLoggedIn } = useAuth();
 
   const handleProfilePictureChange = async (event) => {
     const selectedFile = event.target.files?.[0];
 
+    if (errorMessage) {
+      setErrorMessage("");
+    }
+
     if (!selectedFile) {
       setUploadedProfileImageUrl("");
       setProfilePreviewUrl("");
-      if (errorMessage) {
-        setErrorMessage("");
-      }
       return;
     }
 
@@ -40,9 +43,6 @@ function SignupPage() {
     if (uploadedImageUrl) {
       setUploadedProfileImageUrl(uploadedImageUrl);
       setProfilePreviewUrl(uploadedImageUrl);
-      if (errorMessage) {
-        setErrorMessage("");
-      }
     }
   };
 
@@ -221,7 +221,7 @@ function SignupPage() {
                   <div className="relative">
                     <input
                       accept="image/*"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-3 text-sm text-slate-700 outline-none transition-all file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-blue-600 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-3 text-sm text-slate-700 outline-none transition-all file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white file:transition-colors hover:file:bg-blue-600 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       id="signup-profile-picture"
                       name="profilePicture"
                       onChange={handleProfilePictureChange}
@@ -231,6 +231,7 @@ function SignupPage() {
                       photo_camera
                     </span>
                   </div>
+
                   {profilePreviewUrl ? (
                     <div className="mt-2 flex items-center gap-3">
                       <img
@@ -254,16 +255,28 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       id="signup-password"
                       name="password"
                       onChange={() => errorMessage && setErrorMessage("")}
                       placeholder="Create a password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                     />
                     <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400">
                       lock
                     </span>
+                    <button
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-600"
+                      onClick={() => setShowPassword((current) => !current)}
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-xl">
+                        {showPassword ? "visibility_off" : "visibility"}
+                      </span>
+                    </button>
                   </div>
                   <p className="flex items-center gap-1.5 whitespace-nowrap text-[11px] leading-5 text-slate-500">
                     <span className="material-symbols-outlined mt-[1px] text-sm text-slate-400">
@@ -283,16 +296,32 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       id="signup-confirm-password"
                       name="confirmPassword"
                       onChange={() => errorMessage && setErrorMessage("")}
                       placeholder="Confirm your password"
-                      type="password"
+                      type={showConfirmPassword ? "text" : "password"}
                     />
                     <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400">
                       lock
                     </span>
+                    <button
+                      aria-label={
+                        showConfirmPassword
+                          ? "Hide confirm password"
+                          : "Show confirm password"
+                      }
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-600"
+                      onClick={() =>
+                        setShowConfirmPassword((current) => !current)
+                      }
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-xl">
+                        {showConfirmPassword ? "visibility_off" : "visibility"}
+                      </span>
+                    </button>
                   </div>
                 </div>
 

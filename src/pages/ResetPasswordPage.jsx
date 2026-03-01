@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import { resetPassword } from "../services/AuthService";
 
 function ResetPasswordPage() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const token = String(searchParams.get("token") || "").trim();
+  const email = String(searchParams.get("email") || "").trim();
 
-  const handleResetPassword = (event) => {
+  const handleResetPassword = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -36,7 +43,27 @@ function ResetPasswordPage() {
       return;
     }
 
+    if (!token || !email) {
+      setErrorMessage("Invalid reset link. Please request a new one.");
+      return;
+    }
+
     setErrorMessage("");
+
+    try {
+      setIsSubmitting(true);
+      await resetPassword({ token, email, password });
+      setSuccessMessage("Password reset successful. Redirecting to login...");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch (error) {
+      const message = error?.message || "Failed to reset password.";
+      setErrorMessage(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,6 +103,13 @@ function ResetPasswordPage() {
                     placeholder="Enter new password"
                     type="password"
                   />
+                  <p className="flex items-center gap-1.5 whitespace-nowrap text-[11px] leading-5 text-slate-500">
+                    <span className="material-symbols-outlined mt-[1px] text-sm text-slate-400">
+                      info
+                    </span>
+                    Must be at least 8 characters, include 1 number and 1
+                    special character.
+                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -104,11 +138,21 @@ function ResetPasswordPage() {
                   </div>
                 ) : null}
 
+                {successMessage ? (
+                  <div
+                    className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700"
+                    role="status"
+                  >
+                    {successMessage}
+                  </div>
+                ) : null}
+
                 <button
                   className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  disabled={isSubmitting}
                   type="submit"
                 >
-                  Reset Password
+                  {isSubmitting ? "Resetting..." : "Reset Password"}
                 </button>
               </form>
 

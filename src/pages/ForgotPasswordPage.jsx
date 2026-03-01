@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import { forgotPassword } from "../services/AuthService";
 
 function ForgotPasswordPage() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
-  const handleForgotPasswordSubmit = (event) => {
+  const handleForgotPasswordSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -24,6 +28,25 @@ function ForgotPasswordPage() {
     }
 
     setErrorMessage("");
+    setSuccessMessage("");
+
+    try {
+      setIsSubmitting(true);
+      await forgotPassword({ email });
+      setSuccessMessage(
+        "Reset link sent successfully. Redirecting to login...",
+      );
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch (error) {
+      const message = error?.message || "Failed to send reset link.";
+      setErrorMessage(message);
+      setSuccessMessage("");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -80,11 +103,21 @@ function ForgotPasswordPage() {
                   </div>
                 ) : null}
 
+                {successMessage ? (
+                  <div
+                    className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700"
+                    role="status"
+                  >
+                    {successMessage}
+                  </div>
+                ) : null}
+
                 <button
                   className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  disabled={isSubmitting}
                   type="submit"
                 >
-                  Send Reset Link
+                  {isSubmitting ? "Sending..." : "Send Reset Link"}
                 </button>
               </form>
 

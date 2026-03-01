@@ -50,26 +50,14 @@ export async function logoutUser(payload = {}) {
   return getAuth("/logout");
 }
 
-export async function requestPasswordReset({ email }) {
+export async function forgotPassword({ email }) {
   return postAuth("/forgot-password", { email });
 }
 
-export async function resetPassword({ token, password, confirmPassword }) {
+export async function resetPassword({ token, email, password }) {
   return postAuth("/reset-password", {
     token,
+    email,
     password,
-    confirmPassword,
-  });
-}
-
-export async function changePassword({
-  currentPassword,
-  newPassword,
-  confirmPassword,
-}) {
-  return postAuth("/change-password", {
-    currentPassword,
-    newPassword,
-    confirmPassword,
   });
 }
