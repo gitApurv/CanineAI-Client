@@ -12,21 +12,21 @@ const tagStyles = {
 
 function DiseaseCard({ disease }) {
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm ring-1 ring-slate-100/70 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/20">
       <div className="flex flex-1 flex-col p-6">
         {Array.isArray(disease.tags) && disease.tags.length > 0 ? (
-          <div className="mb-3 flex flex-wrap gap-2">
+          <div className="mb-4 flex flex-wrap gap-2">
             {disease.tags.map((tag) => (
               <span
                 key={`${disease.diseaseId}-${tag}`}
-                className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ring-1 ${tagStyles[String(tag).toUpperCase()] || tagStyles.OTHER}`}
+                className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${tagStyles[String(tag).toUpperCase()] || tagStyles.OTHER}`}
               >
                 {tag}
               </span>
             ))}
           </div>
         ) : null}
-        <h3 className="mb-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-primary">
+        <h3 className="mb-2 text-xl font-bold leading-tight text-slate-900 transition-colors duration-200 group-hover:text-primary">
           {disease.title}
         </h3>
         <p className="mb-6 text-sm leading-relaxed text-slate-600">
@@ -35,7 +35,7 @@ function DiseaseCard({ disease }) {
         <div className="mt-auto border-t border-slate-100 pt-4">
           <Link
             to={`/diseases/${disease.diseaseId}`}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary/10 py-2.5 text-sm font-bold text-primary transition-all duration-200 hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary/10 py-2.5 text-sm font-bold text-primary ring-1 ring-primary/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
           >
             <span>View Details</span>
             <span className="material-symbols-outlined text-lg">
@@ -44,7 +44,7 @@ function DiseaseCard({ disease }) {
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 

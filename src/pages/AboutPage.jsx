@@ -124,71 +124,81 @@ function AboutPage() {
             </div>
           </section>
 
-          <section className="mx-auto max-w-[1440px] px-4 py-20 lg:px-40">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-              <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-10">
-                <h2 className="text-3xl font-bold text-slate-900">
-                  The Problem:{" "}
-                  <span className="text-primary">Silent Symptoms</span>
-                </h2>
-                <div className="space-y-4 text-lg leading-relaxed text-slate-600">
-                  <p>
-                    Dogs are experts at masking pain and illness. Often, by the
-                    time a symptom becomes obvious to a pet owner, the
-                    underlying condition may have progressed significantly.
-                  </p>
-                  <p>
-                    Traditional diagnosis relies heavily on periodic vet visits,
-                    which can leave months of health data unmonitored. Delayed
-                    recognition of symptoms like lethargy, appetite changes, or
-                    minor behavioral shifts can lead to more severe health
-                    outcomes and higher treatment costs.
-                  </p>
-                  <p className="font-medium text-slate-800">
-                    We saw a need for a tool that translates these subtle
-                    signals into actionable health insights instantly.
-                  </p>
-                </div>
-              </div>
+          <section className="relative overflow-hidden border-t border-slate-200/80 bg-white py-20">
+            <div className="absolute -right-40 -top-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl"></div>
+            <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-teal-200/20 blur-3xl"></div>
 
-              <div className="relative flex justify-center lg:justify-end">
-                <div className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-blue-100 to-teal-100 opacity-70 blur-3xl"></div>
-
-                <div className="relative aspect-[4/3] w-full max-w-md overflow-hidden rounded-3xl border-4 border-white bg-white p-2 shadow-2xl shadow-slate-300/40">
-                  <img
-                    alt="Veterinarian examining a dog"
-                    className="h-full w-full rounded-xl object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7aJby5_XfJ83FuTeKgxXC87JHK0-YKqcd9k2m_rPZ7Tdj7AjvlwdB8gDBFelnz2y-0fqhJO_4qQRlFiKYKJEJmSGS5rHzLKW0VOEuFS1vFlxpqVJkR2K6lskRuPRsGjATRUDCKVrA9Mw6n72XarcxCfGa0QjD_463qDJceOTozTnQVgCxed7Yy6IkfaJ7Wu9RepQ7l4FTsCTzsIFSEMYlT-mbhTk-F5xeFKgnlXBqMLjUDZCjuRO3sjvizufU_QeVZXsFeNBOT6H"
-                  />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
-
-                  <div className="hero-tooltip hero-tooltip--top absolute bottom-6 left-6 flex items-center gap-3 rounded-xl border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur">
-                    <div className="rounded-full bg-red-100 p-2 text-red-600">
-                      <span className="material-symbols-outlined">warning</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase text-slate-500">
-                        Risk Factor
-                      </p>
-                      <p className="text-sm font-bold text-slate-900">
-                        Delayed Diagnosis
-                      </p>
-                    </div>
+            <div className="relative mx-auto max-w-[1440px] px-4 lg:px-40">
+              <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+                <div className="px-1 md:px-2 lg:pr-6">
+                  <span className="mb-4 inline-block rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+                    Why It Matters
+                  </span>
+                  <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-4xl">
+                    The Problem:{" "}
+                    <span className="text-primary">Silent Symptoms</span>
+                  </h2>
+                  <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                    <p>
+                      Dogs are experts at masking pain and illness. Often, by
+                      the time a symptom becomes obvious to a pet owner, the
+                      underlying condition may have progressed significantly.
+                    </p>
+                    <p>
+                      Traditional diagnosis relies heavily on periodic vet
+                      visits, which can leave months of health data unmonitored.
+                      Delayed recognition of symptoms like lethargy, appetite
+                      changes, or minor behavioral shifts can lead to more
+                      severe health outcomes and higher treatment costs.
+                    </p>
+                    <p className="font-semibold text-slate-800">
+                      We saw a need for a tool that translates these subtle
+                      signals into actionable health insights instantly.
+                    </p>
                   </div>
+                </div>
 
-                  <div className="hero-tooltip hero-tooltip--bottom absolute right-6 top-6 flex items-center gap-3 rounded-xl border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur">
-                    <div className="rounded-full bg-blue-100 p-2 text-blue-600">
-                      <span className="material-symbols-outlined">
-                        analytics
-                      </span>
+                <div className="relative flex justify-center lg:justify-end">
+                  <div className="absolute left-1/2 top-1/2 -z-10 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-blue-100 via-cyan-50 to-teal-100 opacity-70 blur-3xl"></div>
+
+                  <div className="relative aspect-[4/3] w-full max-w-md overflow-hidden rounded-3xl border-4 border-white bg-white shadow-2xl shadow-slate-300/40">
+                    <img
+                      alt="Veterinarian examining a dog"
+                      className="h-full w-full object-cover"
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7aJby5_XfJ83FuTeKgxXC87JHK0-YKqcd9k2m_rPZ7Tdj7AjvlwdB8gDBFelnz2y-0fqhJO_4qQRlFiKYKJEJmSGS5rHzLKW0VOEuFS1vFlxpqVJkR2K6lskRuPRsGjATRUDCKVrA9Mw6n72XarcxCfGa0QjD_463qDJceOTozTnQVgCxed7Yy6IkfaJ7Wu9RepQ7l4FTsCTzsIFSEMYlT-mbhTk-F5xeFKgnlXBqMLjUDZCjuRO3sjvizufU_QeVZXsFeNBOT6H"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
+
+                    <div className="hero-tooltip hero-tooltip--top absolute bottom-6 left-6 flex items-center gap-3 rounded-xl bg-white/95 p-3.5 shadow-xl backdrop-blur-sm">
+                      <div className="rounded-full bg-red-100 p-2 text-red-600">
+                        <span className="material-symbols-outlined text-xl">
+                          warning
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-slate-500">
+                          Risk Factor
+                        </p>
+                        <p className="text-sm font-bold text-slate-900">
+                          Delayed Diagnosis
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase text-slate-500">
-                        AI Screening
-                      </p>
-                      <p className="text-sm font-bold text-slate-900">
-                        Early Insights
-                      </p>
+
+                    <div className="hero-tooltip hero-tooltip--bottom absolute right-6 top-6 flex items-center gap-3 rounded-xl bg-white/95 p-3.5 shadow-xl backdrop-blur-sm">
+                      <div className="rounded-full bg-blue-100 p-2 text-blue-600">
+                        <span className="material-symbols-outlined text-xl">
+                          analytics
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-slate-500">
+                          AI Screening
+                        </p>
+                        <p className="text-sm font-bold text-slate-900">
+                          Early Insights
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -234,7 +244,7 @@ function AboutPage() {
               </p>
             </div>
 
-            <div className="relative mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white px-8 py-12 shadow-sm">
+            <div className="relative mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white px-8 py-12 shadow-sm shadow-slate-200/60">
               <div className="relative mx-auto flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-center md:gap-6">
                 <div className="pointer-events-none absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 bg-slate-200 md:left-[12%] md:right-[12%] md:top-16 md:h-1 md:w-auto md:translate-x-0 md:-translate-y-1/2"></div>
 
@@ -313,7 +323,7 @@ function AboutPage() {
               <div className="mt-4 flex flex-col gap-4 sm:flex-row">
                 {isUserLoggedIn ? (
                   <button
-                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                     onClick={() => navigate("/dashboard")}
                     type="button"
                   >
@@ -322,14 +332,14 @@ function AboutPage() {
                 ) : (
                   <>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                       onClick={() => navigate("/signup")}
                       type="button"
                     >
                       Create Account
                     </button>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-lg border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                       onClick={() => navigate("/login")}
                       type="button"
                     >

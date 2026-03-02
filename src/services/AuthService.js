@@ -22,13 +22,13 @@ async function postAuth(path, payload = {}) {
 }
 
 export async function registerUser({
-  fullName,
+  name,
   email,
   password,
   profilePictureUrl,
 }) {
   const payload = {
-    fullName,
+    name,
     email,
     password,
   };

@@ -73,7 +73,7 @@ function ResetPasswordPage() {
 
         <main className="flex flex-1 pt-[72px]">
           <section className="flex w-full items-center justify-center px-4 py-12">
-            <div className="w-full max-w-[420px] rounded-2xl border border-slate-200 bg-white px-8 py-9 shadow-lg shadow-slate-300/30 sm:px-9">
+            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-8 py-9 shadow-lg shadow-slate-300/40 sm:px-9">
               <div className="mb-8 text-center">
                 <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                   Reset Your Password
@@ -96,7 +96,7 @@ function ResetPasswordPage() {
                     New Password
                   </label>
                   <input
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                     id="reset-password"
                     name="password"
                     onChange={() => errorMessage && setErrorMessage("")}
@@ -120,7 +120,7 @@ function ResetPasswordPage() {
                     Confirm New Password
                   </label>
                   <input
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                     id="reset-confirm-password"
                     name="confirmPassword"
                     onChange={() => errorMessage && setErrorMessage("")}
@@ -148,7 +148,7 @@ function ResetPasswordPage() {
                 ) : null}
 
                 <button
-                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                   disabled={isSubmitting}
                   type="submit"
                 >

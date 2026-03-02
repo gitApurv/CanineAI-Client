@@ -2,7 +2,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
-import DashboardPage from "./pages/DashboardPage";
 import DiseaseDetailPage from "./pages/DiseaseDetailPage";
 import DiseasesPage from "./pages/DiseasesPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -11,6 +10,15 @@ import LoginPage from "./pages/LoginPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SignupPage from "./pages/SignupPage";
 import ScrollToTop from "./components/common/ScrollToTop";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import DashboardOverviewPage from "./pages/dashboard/DashboardOverviewPage";
+import MyDogsPage from "./pages/dashboard/MyDogsPage";
+import DogProfilePage from "./pages/dashboard/DogProfilePage";
+import AddDogPage from "./pages/dashboard/AddDogPage";
+import EditDogPage from "./pages/dashboard/EditDogPage";
+import PredictDiseasePage from "./pages/dashboard/PredictDiseasePage";
+import PredictionHistoryPage from "./pages/dashboard/PredictionHistoryPage";
+import ProfilePage from "./pages/dashboard/ProfilePage";
 
 function ProtectedRoute({ children }) {
   const { isUserLoggedIn } = useAuth();
@@ -26,7 +34,7 @@ function PublicOnlyRoute({ children }) {
   const { isUserLoggedIn } = useAuth();
 
   if (isUserLoggedIn) {
-    return <Navigate replace to="/dashboard" />;
+    return <Navigate replace to="/dashboard/overview" />;
   }
 
   return children;
@@ -46,10 +54,24 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardPage />
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Navigate replace to="overview" />} />
+          <Route path="overview" element={<DashboardOverviewPage />} />
+          <Route path="dogs" element={<MyDogsPage />} />
+          <Route path="dogs/add" element={<AddDogPage />} />
+          <Route path="dogs/:id" element={<DogProfilePage />} />
+          <Route path="dog/edit/:id" element={<EditDogPage />} />
+          <Route path="predict-disease" element={<PredictDiseasePage />} />
+          <Route
+            path="prediction-history"
+            element={<PredictionHistoryPage />}
+          />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="*" element={<Navigate replace to="overview" />} />
+        </Route>
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/login"

@@ -5,8 +5,11 @@ function DiseasesGrid({ diseases }) {
     return (
       <div
         aria-live="polite"
-        className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center"
+        className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-sm ring-1 ring-slate-100"
       >
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <span className="material-symbols-outlined">search_off</span>
+        </div>
         <h3 className="text-lg font-semibold text-slate-900">
           No diseases found
         </h3>

@@ -10,12 +10,12 @@ const tagStyles = {
 
 function DiseaseDetailHero({ name, tags, imageUrl, summary }) {
   return (
-    <section className="mb-10 overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+    <section className="mb-10 overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50/60 p-6 shadow-sm ring-1 ring-slate-100/70 md:p-8">
       <div className="flex flex-col items-start gap-8 md:flex-row md:gap-10">
-        <div className="h-56 w-full flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-primary/10 shadow-sm md:h-52 md:w-56">
+        <div className="h-56 w-full flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-primary/10 shadow-sm ring-1 ring-slate-100/80 md:h-52 md:w-56">
           <img
             alt={`${name} reference`}
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-center transition-transform duration-500 hover:scale-105"
             loading="eager"
             src={imageUrl}
           />
@@ -26,7 +26,7 @@ function DiseaseDetailHero({ name, tags, imageUrl, summary }) {
               tags.map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ring-1 ${tagStyles[String(tag).toUpperCase()] || tagStyles.OTHER}`}
+                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${tagStyles[String(tag).toUpperCase()] || tagStyles.OTHER}`}
                 >
                   {tag}
                 </span>

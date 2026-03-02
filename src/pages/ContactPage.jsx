@@ -8,12 +8,12 @@ function ContactPage() {
         <Navbar />
 
         <main className="flex-1 pt-[72px]">
-          <section className="px-4 pb-12 pt-16 text-center">
+          <section className="px-4 pb-10 pt-14 text-center">
             <div className="mx-auto max-w-3xl">
-              <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+              <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl">
                 Contact & Support
               </h1>
-              <p className="mx-auto max-w-2xl text-lg text-slate-600">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
                 We&apos;re here to help you and your canine companion. Reach out
                 with any questions about our AI diagnostics, partnership
                 opportunities, or technical support.
@@ -24,7 +24,7 @@ function ContactPage() {
           <section className="mx-auto max-w-5xl px-4 pb-20">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                <div className="rounded-xl border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/50">
+                <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/60 sm:p-9">
                   <form className="space-y-6" method="POST">
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div className="space-y-2">
@@ -35,7 +35,7 @@ function ContactPage() {
                           Full Name
                         </label>
                         <input
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                           id="contact-full-name"
                           placeholder="John Doe"
                           type="text"
@@ -49,7 +49,7 @@ function ContactPage() {
                           Email Address
                         </label>
                         <input
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                           id="contact-email"
                           placeholder="name@example.com"
                           type="email"
@@ -65,7 +65,7 @@ function ContactPage() {
                         Subject
                       </label>
                       <select
-                        className="w-full appearance-none rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                         id="contact-subject"
                       >
                         <option value="">Select a topic</option>
@@ -85,22 +85,22 @@ function ContactPage() {
                         Message
                       </label>
                       <textarea
-                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                         id="contact-message"
                         placeholder="How can we help you and your pet today?"
                         rows="5"
                       ></textarea>
                     </div>
 
-                    <div className="flex flex-col gap-4 pt-2 sm:flex-row">
+                    <div className="flex flex-col gap-4 border-t border-slate-100 pt-4 sm:flex-row">
                       <button
-                        className="flex-1 rounded-lg bg-primary py-3 font-bold text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                        className="flex-1 rounded-xl bg-primary py-3 font-bold text-white shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                         type="submit"
                       >
                         Submit Message
                       </button>
                       <button
-                        className="rounded-lg bg-slate-100 px-8 py-3 font-bold text-slate-600 transition-all hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                        className="rounded-xl bg-slate-100 px-8 py-3 font-bold text-slate-600 transition-all hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                         type="reset"
                       >
                         Clear
@@ -110,9 +110,9 @@ function ContactPage() {
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="rounded-xl border border-slate-100 bg-white p-6 shadow-sm">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                   <div className="mb-4 flex items-start gap-4">
-                    <div className="rounded-lg bg-primary/10 p-3">
+                    <div className="rounded-xl bg-primary/10 p-3">
                       <span className="material-symbols-outlined text-primary">
                         mail
                       </span>
@@ -132,7 +132,7 @@ function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="rounded-lg bg-primary/10 p-3">
+                    <div className="rounded-xl bg-primary/10 p-3">
                       <span className="material-symbols-outlined text-primary">
                         schedule
                       </span>
@@ -151,7 +151,7 @@ function ContactPage() {
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-primary p-6 text-white shadow-xl shadow-primary/20">
+                <div className="rounded-2xl bg-primary p-6 text-white shadow-xl shadow-primary/20">
                   <h3 className="mb-2 text-xl font-bold">
                     Looking for quick answers?
                   </h3>
@@ -160,7 +160,7 @@ function ContactPage() {
                     already answered your question!
                   </p>
                   <button
-                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-white py-3 font-bold text-primary transition-all hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 font-bold text-primary transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                     type="button"
                   >
                     View FAQs

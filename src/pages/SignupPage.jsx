@@ -50,7 +50,7 @@ function SignupPage() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const fullName = String(formData.get("fullName") || "").trim();
+    const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
     const profilePictureFile = formData.get("profilePicture");
     const password = String(formData.get("password") || "").trim();
@@ -58,8 +58,8 @@ function SignupPage() {
       formData.get("confirmPassword") || "",
     ).trim();
 
-    if (!fullName) {
-      setErrorMessage("Full name is required.");
+    if (!name) {
+      setErrorMessage("Name is required.");
       return;
     }
 
@@ -129,7 +129,7 @@ function SignupPage() {
       }
 
       await registerUser({
-        fullName,
+        name,
         email,
         password,
         profilePictureUrl,
@@ -153,7 +153,7 @@ function SignupPage() {
 
         <main className="flex flex-1 pt-[72px]">
           <section className="flex w-full items-center justify-center px-4 py-10">
-            <div className="w-full max-w-[420px] rounded-2xl border border-slate-200 bg-white px-8 py-8 shadow-lg shadow-slate-300/30 sm:px-9">
+            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-8 py-8 shadow-lg shadow-slate-300/40 sm:px-9">
               <div className="mb-7 text-center">
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                   Create Your Account
@@ -176,9 +176,9 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="signup-full-name"
-                      name="fullName"
+                      name="name"
                       onChange={() => errorMessage && setErrorMessage("")}
                       placeholder="Enter your full name"
                       type="text"
@@ -198,7 +198,7 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="signup-email"
                       name="email"
                       onChange={() => errorMessage && setErrorMessage("")}
@@ -221,7 +221,7 @@ function SignupPage() {
                   <div className="relative">
                     <input
                       accept="image/*"
-                      className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-3 text-sm text-slate-700 outline-none transition-all file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white file:transition-colors hover:file:bg-blue-600 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50/70 py-2.5 pl-11 pr-3 text-sm text-slate-700 outline-none transition-all file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white file:transition-colors hover:file:bg-blue-600 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="signup-profile-picture"
                       name="profilePicture"
                       onChange={handleProfilePictureChange}
@@ -255,7 +255,7 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="signup-password"
                       name="password"
                       onChange={() => errorMessage && setErrorMessage("")}
@@ -296,7 +296,7 @@ function SignupPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="signup-confirm-password"
                       name="confirmPassword"
                       onChange={() => errorMessage && setErrorMessage("")}
@@ -335,7 +335,7 @@ function SignupPage() {
                 ) : null}
 
                 <button
-                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                   disabled={isSubmitting}
                   type="submit"
                 >

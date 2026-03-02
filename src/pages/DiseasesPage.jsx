@@ -72,7 +72,7 @@ function DiseasesPage() {
                   medical_services
                 </span>
               </div>
-              <h1 className="mb-3 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-4xl">
+              <h1 className="mb-3 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 lg:text-5xl">
                 Canine Disease Knowledge Base
               </h1>
               <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600">
@@ -88,7 +88,7 @@ function DiseasesPage() {
             {errorMessage ? (
               <div
                 aria-live="polite"
-                className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center"
+                className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-sm"
               >
                 <h3 className="text-lg font-semibold text-slate-900">
                   Error Loading Diseases
@@ -96,7 +96,7 @@ function DiseasesPage() {
                 <p className="mt-2 text-sm text-slate-600">{errorMessage}</p>
               </div>
             ) : isLoading ? (
-              <div className="rounded-xl border border-slate-200 bg-white p-10 text-center">
+              <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
                 <p className="text-sm text-slate-600">Loading diseases...</p>
               </div>
             ) : (

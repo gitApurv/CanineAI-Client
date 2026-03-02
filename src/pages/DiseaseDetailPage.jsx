@@ -55,7 +55,7 @@ function DiseaseDetailPage() {
         <div className="relative flex min-h-screen w-full flex-col">
           <Navbar />
           <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-[88px]">
-            <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+            <div className="mt-16 rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-lg shadow-slate-200/60">
               <p className="text-base font-medium text-slate-700">
                 Loading disease details...
               </p>
@@ -73,7 +73,7 @@ function DiseaseDetailPage() {
         <div className="relative flex min-h-screen w-full flex-col">
           <Navbar />
           <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-[88px]">
-            <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+            <div className="mt-16 rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-lg shadow-slate-200/60">
               <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-slate-900">
                 Disease not found
               </h2>

@@ -56,9 +56,9 @@ function LoginPage() {
 
         <main className="flex flex-1 pt-[72px]">
           <section className="flex w-full items-center justify-center px-4 py-12">
-            <div className="w-full max-w-[420px] rounded-2xl border border-slate-200 bg-white px-8 py-9 shadow-lg shadow-slate-300/30 sm:px-9">
+            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-8 py-9 shadow-lg shadow-slate-300/40 sm:px-9">
               <div className="mb-7 text-center">
-                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                   Login to Your Account
                 </h1>
                 <p className="mt-2 text-sm text-slate-500">
@@ -80,7 +80,7 @@ function LoginPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="login-email"
                       name="email"
                       onChange={() => errorMessage && setErrorMessage("")}
@@ -102,7 +102,7 @@ function LoginPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3 pl-11 pr-11 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                       id="login-password"
                       name="password"
                       onChange={() => errorMessage && setErrorMessage("")}
@@ -137,7 +137,7 @@ function LoginPage() {
                 ) : null}
 
                 <button
-                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
                   disabled={isSubmitting}
                   type="submit"
                 >
