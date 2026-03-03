@@ -10,3 +10,22 @@ export async function getCurrentUser() {
     throw normalizeApiError(error, "Unable to load user details.");
   }
 }
+
+export async function updateCurrentUser(userData) {
+  try {
+    const response = await axios.put("/api/user", userData);
+    const data = unwrapApiResponse(response, "Unable to update profile.");
+    return data;
+  } catch (error) {
+    throw normalizeApiError(error, "Unable to update profile.");
+  }
+}
+
+export async function changePassword(payload) {
+  try {
+    const reponse = await axios.post("/api/user", payload);
+    unwrapApiResponse(reponse, "Unable to change password.");
+  } catch (error) {
+    throw normalizeApiError(error, "Unable to change password.");
+  }
+}

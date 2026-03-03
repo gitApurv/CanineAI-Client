@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getCurrentUser } from "../../services/UserService";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const [currentUserDetails, setCurrentUserDetails] = useState({
@@ -9,6 +10,7 @@ function ProfilePage() {
     createdAt: "",
   });
   const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadCurrentUserDetails = async () => {
@@ -102,6 +104,9 @@ function ProfilePage() {
           <button
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow"
             type="button"
+            onClick={() => {
+              navigate("/dashboard/profile/edit");
+            }}
           >
             <span className="material-symbols-outlined text-[18px]">edit</span>
             Edit Profile
@@ -109,6 +114,9 @@ function ProfilePage() {
           <button
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow"
             type="button"
+            onClick={() => {
+              navigate("/dashboard/profile/password");
+            }}
           >
             <span className="material-symbols-outlined text-[18px]">lock</span>
             Change Password

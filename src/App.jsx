@@ -19,6 +19,8 @@ import EditDogPage from "./pages/dashboard/EditDogPage";
 import PredictDiseasePage from "./pages/dashboard/PredictDiseasePage";
 import PredictionHistoryPage from "./pages/dashboard/PredictionHistoryPage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
+import EditProfilePage from "./pages/dashboard/EditProfilePage";
+import ChangePasswordPage from "./pages/dashboard/ChangePasswordPage";
 
 function ProtectedRoute({ children }) {
   const { isUserLoggedIn } = useAuth();
@@ -70,6 +72,8 @@ function App() {
             element={<PredictionHistoryPage />}
           />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile/edit" element={<EditProfilePage />} />
+          <Route path="profile/password" element={<ChangePasswordPage />} />
           <Route path="*" element={<Navigate replace to="overview" />} />
         </Route>
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
