@@ -216,7 +216,7 @@ function SignupPage() {
                     className="text-sm font-medium text-slate-700"
                     htmlFor="signup-profile-picture"
                   >
-                    Profile Picture
+                    Profile Picture (Optional)
                   </label>
                   <div className="relative">
                     <input

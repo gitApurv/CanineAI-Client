@@ -63,7 +63,7 @@ function App() {
           <Route path="dogs" element={<MyDogsPage />} />
           <Route path="dogs/add" element={<AddDogPage />} />
           <Route path="dogs/:id" element={<DogProfilePage />} />
-          <Route path="dog/edit/:id" element={<EditDogPage />} />
+          <Route path="dogs/edit/:id" element={<EditDogPage />} />
           <Route path="predict-disease" element={<PredictDiseasePage />} />
           <Route
             path="prediction-history"

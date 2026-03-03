@@ -1,27 +1,187 @@
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { fetchDogById, updateDog } from "../../services/DogService";
+import { handleImageUpload } from "../../utils/imageUpload";
 
 function EditDogPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [formValues, setFormValues] = useState({
+    name: "",
+    breed: "",
+    ageYears: "",
+    weightKg: "",
+    gender: "",
+    vaccinated: false,
+    profileImageUrl: null,
+  });
+  const [loading, setLoading] = useState(true);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const dogName =
-    id === "bella"
-      ? "Bella"
-      : id === "rocky"
-        ? "Rocky"
-        : id === "luna"
-          ? "Luna"
-          : "Max";
-  const dogBreed =
-    id === "bella"
-      ? "German Shepherd"
-      : id === "rocky"
-        ? "Bulldog"
-        : id === "luna"
-          ? "Siberian Husky"
-          : "Golden Retriever";
+  const onFieldChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    setFormValues((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const setImageValue = (key, value) => {
+    if (key !== "image") return;
+
+    setFormValues((prev) => ({
+      ...prev,
+      profileImageUrl: value,
+    }));
+  };
+
+  const showAlert = (message, type) => {
+    if (type === "error") {
+      setError(message);
+    }
+  };
+
+  const onImageChange = async (event) => {
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
+
+    setError("");
+
+    await handleImageUpload(selectedFile, {
+      setLoading: setImageUploading,
+      setValue: setImageValue,
+      showAlert,
+    });
+  };
+
+  useEffect(() => {
+    const loadDog = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await fetchDogById(id);
+        setFormValues({
+          name: data?.name || "",
+          breed: data?.breed || "",
+          ageYears: data?.ageYears ? String(data.ageYears) : "",
+          weightKg: data?.weightKg ? String(data.weightKg) : "",
+          gender:
+            data?.gender === "MALE" || data?.gender === "FEMALE"
+              ? data.gender
+              : "",
+          vaccinated: Boolean(data?.vaccinated),
+          profileImageUrl: data?.profileImageUrl || null,
+        });
+      } catch (error) {
+        const message =
+          error?.message || "Unable to load dog details. Please try again.";
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDog();
+  }, [id]);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+
+    const {
+      name,
+      breed,
+      ageYears,
+      weightKg,
+      gender,
+      vaccinated,
+      profileImageUrl,
+    } = formValues;
+
+    if (!name.trim() || !breed.trim() || !ageYears || !weightKg || !gender) {
+      setError("Please fill all required fields.");
+      return;
+    }
+
+    const parsedAgeYears = Number(ageYears);
+    const parsedWeightKg = Number(weightKg);
+
+    if (
+      Number.isNaN(parsedAgeYears) ||
+      parsedAgeYears <= 0 ||
+      !Number.isInteger(parsedAgeYears)
+    ) {
+      setError("Age must be a whole number greater than 0.");
+      return;
+    }
+
+    if (
+      Number.isNaN(parsedWeightKg) ||
+      parsedWeightKg <= 0 ||
+      !Number.isInteger(parsedWeightKg)
+    ) {
+      setError("Weight must be a whole number greater than 0.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const payload = {
+        name: name.trim(),
+        breed: breed.trim(),
+        ageYears: parsedAgeYears,
+        weightKg: parsedWeightKg,
+        gender,
+        vaccinated,
+        profileImageUrl,
+      };
+
+      await updateDog(id, payload);
+      navigate(`/dashboard/dogs/${id}`);
+    } catch (submitError) {
+      setError(
+        submitError?.message || "Unable to update dog. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="space-y-7" aria-live="polite" aria-busy="true">
+        <header className="animate-pulse rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm sm:px-7">
+          <div className="h-10 w-64 rounded bg-slate-200" />
+          <div className="mt-3 h-4 w-72 max-w-full rounded bg-slate-200" />
+        </header>
+
+        <article className="mx-auto w-full max-w-[900px] animate-pulse rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 sm:p-8">
+          <div className="h-8 w-40 rounded bg-slate-200" />
+          <div className="mt-2 h-4 w-80 max-w-full rounded bg-slate-200" />
+          <div className="mt-6 space-y-4">
+            <div className="h-12 w-full rounded-xl bg-slate-200" />
+            <div className="h-12 w-full rounded-xl bg-slate-200" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="h-12 w-full rounded-xl bg-slate-200" />
+              <div className="h-12 w-full rounded-xl bg-slate-200" />
+            </div>
+          </div>
+        </article>
+      </section>
+    );
+  }
 
   return (
     <section className="space-y-7">
+      {error && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {error}
+        </div>
+      )}
+
       <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           Edit Dog Profile
@@ -37,7 +197,7 @@ function EditDogPage() {
           Please provide accurate information for better health predictions.
         </p>
 
-        <form className="mt-6 space-y-5">
+        <form className="mt-6 space-y-5" onSubmit={onSubmit}>
           <div>
             <label
               className="text-sm font-medium text-slate-700"
@@ -47,9 +207,11 @@ function EditDogPage() {
             </label>
             <input
               className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15"
-              defaultValue={dogName}
               id="dog-name-edit"
+              name="name"
+              onChange={onFieldChange}
               type="text"
+              value={formValues.name}
             />
           </div>
 
@@ -60,16 +222,47 @@ function EditDogPage() {
             >
               Breed
             </label>
-            <select
+            <input
               className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15"
-              defaultValue={dogBreed}
               id="dog-breed-edit"
+              name="breed"
+              onChange={onFieldChange}
+              type="text"
+              value={formValues.breed}
+            />
+          </div>
+
+          <div>
+            <label
+              className="text-sm font-medium text-slate-700"
+              htmlFor="dog-image-edit"
             >
-              <option>Golden Retriever</option>
-              <option>German Shepherd</option>
-              <option>Bulldog</option>
-              <option>Siberian Husky</option>
-            </select>
+              Profile Image (Optional)
+            </label>
+            <input
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 outline-none transition-all file:mr-4 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-slate-700 hover:file:bg-slate-200 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15"
+              accept="image/jpeg,image/png,image/jpg"
+              id="dog-image-edit"
+              onChange={onImageChange}
+              type="file"
+            />
+            {imageUploading && (
+              <p className="mt-2 text-xs font-medium text-slate-500">
+                Uploading image...
+              </p>
+            )}
+            {formValues.profileImageUrl && (
+              <div className="mt-3 inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-2 pr-3">
+                <img
+                  alt="Dog preview"
+                  className="h-14 w-14 rounded-lg object-cover"
+                  src={formValues.profileImageUrl}
+                />
+                <p className="text-xs font-medium text-slate-600">
+                  Image uploaded
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -83,9 +276,13 @@ function EditDogPage() {
               <div className="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 transition-all focus-within:border-primary focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/15">
                 <input
                   className="w-full border-0 p-0 text-slate-900 outline-none"
-                  defaultValue="4"
                   id="dog-age-edit"
+                  min="1"
+                  name="ageYears"
+                  onChange={onFieldChange}
+                  step="1"
                   type="number"
+                  value={formValues.ageYears}
                 />
                 <span className="text-sm text-slate-400">Years</span>
               </div>
@@ -100,9 +297,13 @@ function EditDogPage() {
               <div className="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 transition-all focus-within:border-primary focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/15">
                 <input
                   className="w-full border-0 p-0 text-slate-900 outline-none"
-                  defaultValue="32.5"
                   id="dog-weight-edit"
+                  min="1"
+                  name="weightKg"
+                  onChange={onFieldChange}
+                  step="1"
                   type="number"
+                  value={formValues.weightKg}
                 />
                 <span className="text-sm text-slate-400">kg</span>
               </div>
@@ -113,13 +314,27 @@ function EditDogPage() {
             <p className="text-sm font-medium text-slate-700">Gender</p>
             <div className="mt-2 grid gap-3 sm:grid-cols-2">
               <button
-                className="rounded-xl border border-primary bg-primary/5 px-4 py-3 text-sm font-medium text-primary shadow-sm transition-all hover:-translate-y-0.5"
+                className={`rounded-xl border px-4 py-3 text-sm font-medium transition-all hover:-translate-y-0.5 ${
+                  formValues.gender === "MALE"
+                    ? "border-primary bg-primary/5 text-primary"
+                    : "border-slate-200 bg-white text-slate-700 hover:border-primary/40 hover:bg-primary/5"
+                }`}
+                onClick={() =>
+                  setFormValues((prev) => ({ ...prev, gender: "MALE" }))
+                }
                 type="button"
               >
                 Male
               </button>
               <button
-                className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/5"
+                className={`rounded-xl border px-4 py-3 text-sm font-medium transition-all hover:-translate-y-0.5 ${
+                  formValues.gender === "FEMALE"
+                    ? "border-primary bg-primary/5 text-primary"
+                    : "border-slate-200 bg-white text-slate-700 hover:border-primary/40 hover:bg-primary/5"
+                }`}
+                onClick={() =>
+                  setFormValues((prev) => ({ ...prev, gender: "FEMALE" }))
+                }
                 type="button"
               >
                 Female
@@ -130,7 +345,9 @@ function EditDogPage() {
           <label className="inline-flex items-center gap-2 rounded-lg px-1 text-sm text-slate-700">
             <input
               className="rounded border-slate-300 text-primary focus:ring-primary"
-              defaultChecked
+              checked={formValues.vaccinated}
+              name="vaccinated"
+              onChange={onFieldChange}
               type="checkbox"
             />
             Vaccinations up to date
@@ -145,12 +362,13 @@ function EditDogPage() {
             </Link>
             <button
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-              type="button"
+              disabled={submitting}
+              type="submit"
             >
               <span className="material-symbols-outlined text-[16px]">
                 save
               </span>
-              Save Changes
+              {submitting ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>

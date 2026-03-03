@@ -1,53 +1,115 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { fetchDogById } from "../../services/DogService";
 
 function DogProfilePage() {
   const { id } = useParams();
+  const [dog, setDog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const dogName =
-    id === "bella"
-      ? "Bella"
-      : id === "rocky"
-        ? "Rocky"
-        : id === "luna"
-          ? "Luna"
-          : "Max";
-  const dogBreed =
-    id === "bella"
-      ? "German Shepherd"
-      : id === "rocky"
-        ? "Bulldog"
-        : id === "luna"
-          ? "Siberian Husky"
-          : "Golden Retriever";
+  useEffect(() => {
+    const loadDog = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await fetchDogById(id);
+        setDog(data);
+      } catch (error) {
+        const message =
+          error?.message || "Unable to load dog details. Please try again.";
+        setError(message);
+        setDog(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDog();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <section className="space-y-7" aria-live="polite" aria-busy="true">
+        <header className="animate-pulse rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm sm:px-7">
+          <div className="h-10 w-56 rounded bg-slate-200" />
+          <div className="mt-3 h-4 w-80 max-w-full rounded bg-slate-200" />
+        </header>
+
+        <article className="animate-pulse rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="h-20 w-20 rounded-full bg-slate-200" />
+              <div className="space-y-3">
+                <div className="h-10 w-56 rounded bg-slate-200" />
+                <div className="h-6 w-40 rounded bg-slate-200" />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="h-10 w-28 rounded-xl bg-slate-200" />
+              <div className="h-10 w-36 rounded-xl bg-slate-200" />
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 border-t border-slate-100 pt-6 sm:grid-cols-2 xl:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="rounded-xl bg-slate-50 p-4">
+                <div className="h-3 w-20 rounded bg-slate-200" />
+                <div className="mt-2 h-7 w-28 rounded bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        </article>
+      </section>
+    );
+  }
 
   return (
     <section className="space-y-7">
+      {error && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {error}
+        </div>
+      )}
+
       <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           Dog Profile
         </h1>
         <p className="mt-2 text-sm text-slate-500 sm:text-base">
-          Detailed health overview for {dogName}.
+          Detailed health overview for {dog?.name || "Unknown Dog"}.
         </p>
       </header>
 
       <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-amber-600 shadow-inner">
-              <span className="material-symbols-outlined text-4xl">pets</span>
-            </div>
+            {dog?.profileImageUrl ? (
+              <img
+                alt={dog?.name || "Dog"}
+                className="h-20 w-20 rounded-full border-2 border-white object-cover shadow"
+                src={dog.profileImageUrl}
+              />
+            ) : (
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-amber-600 shadow-inner">
+                <span className="material-symbols-outlined text-4xl">pets</span>
+              </div>
+            )}
             <div>
-              <h2 className="text-5xl font-bold text-slate-900">{dogName}</h2>
-              <p className="text-2xl text-slate-500">{dogBreed}</p>
+              <h2 className="text-5xl font-bold text-slate-900">
+                {dog?.name || "Unknown Dog"}
+              </h2>
+              <p className="text-2xl text-slate-500">
+                {dog?.breed || "Unknown Breed"}
+              </p>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
             <button
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:-translate-y-0.5 hover:bg-slate-100"
-              onClick={() => navigate(`/dashboard/dog/edit/${id}`)}
+              onClick={() => navigate(`/dashboard/dogs/edit/${id}`)}
               type="button"
             >
               <span className="material-symbols-outlined text-[16px]">
@@ -70,26 +132,44 @@ function DogProfilePage() {
             <p className="text-xs font-semibold uppercase text-slate-500">
               Age
             </p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">4 Years</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">
+              {dog?.ageYears || "Unknown Age"} Years
+            </p>
           </div>
           <div className="rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100">
             <p className="text-xs font-semibold uppercase text-slate-500">
               Weight
             </p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">32.5 kg</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">
+              {dog?.weightKg || "Unknown Weight"} kg
+            </p>
           </div>
           <div className="rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100">
             <p className="text-xs font-semibold uppercase text-slate-500">
               Gender
             </p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">Male</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">
+              {dog?.gender || "Unknown Gender"}
+            </p>
           </div>
           <div className="rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100">
             <p className="text-xs font-semibold uppercase text-slate-500">
               Vaccination
             </p>
-            <p className="mt-1 inline-flex items-center rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">
-              Up to Date
+            <p
+              className={`mt-1 inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${
+                dog?.vaccinated === true
+                  ? "bg-emerald-100 text-emerald-700"
+                  : dog?.vaccinated === false
+                    ? "bg-amber-100 text-amber-700"
+                    : "bg-slate-100 text-slate-600"
+              }`}
+            >
+              {dog?.vaccinated === true
+                ? "Up to Date"
+                : dog?.vaccinated === false
+                  ? "Not Vaccinated"
+                  : "Unknown"}
             </p>
           </div>
         </div>
