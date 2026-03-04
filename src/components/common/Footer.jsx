@@ -5,29 +5,6 @@ function Footer() {
         <p className="text-sm font-medium text-slate-500">
           © 2026 Canine AI Inc. All rights reserved.
         </p>
-        <nav
-          aria-label="Footer"
-          className="flex flex-wrap items-center gap-3 text-sm text-slate-500"
-        >
-          <a
-            className="rounded-lg px-2.5 py-1.5 transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-            href="/"
-          >
-            Privacy Policy
-          </a>
-          <a
-            className="rounded-lg px-2.5 py-1.5 transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-            href="/"
-          >
-            Terms of Service
-          </a>
-          <a
-            className="rounded-lg px-2.5 py-1.5 transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-            href="/"
-          >
-            Help Center
-          </a>
-        </nav>
       </div>
     </footer>
   );

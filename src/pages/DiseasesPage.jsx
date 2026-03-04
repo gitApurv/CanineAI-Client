@@ -3,7 +3,7 @@ import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import DiseasesFilters from "../components/diseases/DiseasesFilters";
 import DiseasesGrid from "../components/diseases/DiseasesGrid";
-import { fetchDiseases } from "../services/DiseasesService";
+import { fetchDiseases } from "../services/DiseaseService";
 
 function DiseasesPage() {
   const [diseases, setDiseases] = useState([]);

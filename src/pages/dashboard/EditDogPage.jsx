@@ -4,7 +4,7 @@ import { fetchDogById, updateDog } from "../../services/DogService";
 import { handleImageUpload } from "../../utils/imageUpload";
 
 function EditDogPage() {
-  const { id } = useParams();
+  const { dogId } = useParams();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     name: "",
@@ -61,7 +61,7 @@ function EditDogPage() {
       try {
         setLoading(true);
         setError("");
-        const data = await fetchDogById(id);
+        const data = await fetchDogById(dogId);
         setFormValues({
           name: data?.name || "",
           breed: data?.breed || "",
@@ -84,7 +84,7 @@ function EditDogPage() {
     };
 
     loadDog();
-  }, [id]);
+  }, [dogId]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -100,8 +100,28 @@ function EditDogPage() {
       profileImageUrl,
     } = formValues;
 
-    if (!name.trim() || !breed.trim() || !ageYears || !weightKg || !gender) {
-      setError("Please fill all required fields.");
+    if (!name.trim()) {
+      setError("Dog name is required.");
+      return;
+    }
+
+    if (!breed.trim()) {
+      setError("Breed is required.");
+      return;
+    }
+
+    if (!ageYears) {
+      setError("Age is required.");
+      return;
+    }
+
+    if (!weightKg) {
+      setError("Weight is required.");
+      return;
+    }
+
+    if (!gender) {
+      setError("Please select a gender.");
       return;
     }
 
@@ -139,8 +159,8 @@ function EditDogPage() {
         profileImageUrl,
       };
 
-      await updateDog(id, payload);
-      navigate(`/dashboard/dogs/${id}`);
+      await updateDog(dogId, payload);
+      navigate(`/dashboard/dogs/${dogId}`);
     } catch (submitError) {
       setError(
         submitError?.message || "Unable to update dog. Please try again.",
@@ -176,12 +196,6 @@ function EditDogPage() {
 
   return (
     <section className="space-y-7">
-      {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
-          {error}
-        </div>
-      )}
-
       <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           Edit Dog Profile
@@ -353,23 +367,36 @@ function EditDogPage() {
             Vaccinations up to date
           </label>
 
-          <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
-            <Link
-              className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-100"
-              to={`/dashboard/dogs/${id}`}
+          <div className="space-y-4 border-t border-slate-100 pt-5">
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-out ${
+                error
+                  ? "max-h-24 translate-y-0 opacity-100"
+                  : "max-h-0 -translate-y-1 opacity-0"
+              }`}
             >
-              Cancel
-            </Link>
-            <button
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-              disabled={submitting}
-              type="submit"
-            >
-              <span className="material-symbols-outlined text-[16px]">
-                save
-              </span>
-              {submitting ? "Saving..." : "Save Changes"}
-            </button>
+              <div className="w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                {error}
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-3">
+              <Link
+                className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-100"
+                to={`/dashboard/dogs/${dogId}`}
+              >
+                Cancel
+              </Link>
+              <button
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
+                disabled={submitting}
+                type="submit"
+              >
+                <span className="material-symbols-outlined text-[16px]">
+                  save
+                </span>
+                {submitting ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
           </div>
         </form>
       </article>

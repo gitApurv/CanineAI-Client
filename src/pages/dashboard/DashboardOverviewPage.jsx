@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function DashboardOverviewView() {
+  const navigate = useNavigate();
+
   const recentPredictions = [
     {
       dogName: "Max",
@@ -29,18 +33,21 @@ function DashboardOverviewView() {
       title: "Add New Dog",
       subtitle: "Register a new pet",
       iconStyle: "bg-blue-100 text-primary",
+      path: "/dashboard/dogs/add",
     },
     {
       icon: "monitor_heart",
       title: "Start Prediction",
       subtitle: "Run health analysis",
       iconStyle: "bg-indigo-100 text-indigo-600",
+      path: "/dashboard/predict",
     },
     {
       icon: "help",
       title: "FAQs",
       subtitle: "Get quick help and answers",
       iconStyle: "bg-slate-100 text-slate-600",
+      path: "/faqs",
     },
   ];
 
@@ -197,6 +204,9 @@ function DashboardOverviewView() {
                 key={action.title}
                 className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-sm"
                 type="button"
+                onClick={() => {
+                  navigate(action.path);
+                }}
               >
                 <div className="flex items-center gap-3">
                   <span

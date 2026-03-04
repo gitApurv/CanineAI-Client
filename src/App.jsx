@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
+import FAQsPage from "./pages/FAQsPage";
 import DiseaseDetailPage from "./pages/DiseaseDetailPage";
 import DiseasesPage from "./pages/DiseasesPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -51,7 +51,7 @@ function App() {
         <Route path="/diseases" element={<DiseasesPage />} />
         <Route path="/diseases/:diseaseId" element={<DiseaseDetailPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/faqs" element={<FAQsPage />} />
         <Route
           path="/dashboard"
           element={
@@ -64,9 +64,10 @@ function App() {
           <Route path="overview" element={<DashboardOverviewPage />} />
           <Route path="dogs" element={<MyDogsPage />} />
           <Route path="dogs/add" element={<AddDogPage />} />
-          <Route path="dogs/:id" element={<DogProfilePage />} />
-          <Route path="dogs/edit/:id" element={<EditDogPage />} />
-          <Route path="predict-disease" element={<PredictDiseasePage />} />
+          <Route path="dogs/:dogId" element={<DogProfilePage />} />
+          <Route path="dogs/edit/:dogId" element={<EditDogPage />} />
+          <Route path="predict" element={<PredictDiseasePage />} />
+          <Route path="predict/:dogId" element={<PredictDiseasePage />} />
           <Route
             path="prediction-history"
             element={<PredictionHistoryPage />}

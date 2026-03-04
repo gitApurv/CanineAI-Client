@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchDogById } from "../../services/DogService";
 
 function DogProfilePage() {
-  const { id } = useParams();
+  const { dogId } = useParams();
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ function DogProfilePage() {
       try {
         setLoading(true);
         setError("");
-        const data = await fetchDogById(id);
+        const data = await fetchDogById(dogId);
         setDog(data);
       } catch (error) {
         const message =
@@ -27,7 +27,7 @@ function DogProfilePage() {
     };
 
     loadDog();
-  }, [id]);
+  }, [dogId]);
 
   if (loading) {
     return (
@@ -109,7 +109,7 @@ function DogProfilePage() {
           <div className="flex flex-wrap gap-3">
             <button
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:-translate-y-0.5 hover:bg-slate-100"
-              onClick={() => navigate(`/dashboard/dogs/edit/${id}`)}
+              onClick={() => navigate(`/dashboard/dogs/edit/${dogId}`)}
               type="button"
             >
               <span className="material-symbols-outlined text-[16px]">
@@ -119,7 +119,7 @@ function DogProfilePage() {
             </button>
             <Link
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-              to="/dashboard/predict-disease"
+              to={`/dashboard/predict/${dogId}`}
             >
               <span className="material-symbols-outlined text-[16px]">add</span>
               Predict Disease
@@ -268,7 +268,7 @@ function DogProfilePage() {
       <div className="grid gap-4 sm:grid-cols-2">
         <Link
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-          to="/dashboard/predict-disease"
+          to={`/dashboard/predict/${dogId}`}
         >
           <span className="material-symbols-outlined text-[16px]">add</span>
           Start New Prediction

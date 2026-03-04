@@ -8,7 +8,7 @@ import DiseaseDetailHero from "../components/disease-detail/DiseaseDetailHero";
 import OverviewSection from "../components/disease-detail/OverviewSection";
 import PreventionSection from "../components/disease-detail/PreventionSection";
 import SymptomsGrid from "../components/disease-detail/SymptomsGrid";
-import { fetchDiseaseById } from "../services/DiseasesService";
+import { fetchDiseaseById } from "../services/DiseaseService";
 
 function DiseaseDetailPage() {
   const { diseaseId } = useParams();

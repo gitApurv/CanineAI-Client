@@ -325,22 +325,24 @@ function SignupPage() {
                   </div>
                 </div>
 
-                {errorMessage ? (
-                  <div
-                    className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
-                    role="alert"
-                  >
-                    {errorMessage}
-                  </div>
-                ) : null}
+                <div className="space-y-4 border-t border-slate-100 pt-5">
+                  {errorMessage ? (
+                    <div
+                      className="w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+                      role="alert"
+                    >
+                      {errorMessage}
+                    </div>
+                  ) : null}
 
-                <button
-                  className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-                  disabled={isSubmitting}
-                  type="submit"
-                >
-                  {isSubmitting ? "Creating Account..." : "Create Account"}
-                </button>
+                  <button
+                    className="w-full rounded-xl bg-primary py-3 text-sm font-bold tracking-wide text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                    disabled={isSubmitting}
+                    type="submit"
+                  >
+                    {isSubmitting ? "Creating Account..." : "Create Account"}
+                  </button>
+                </div>
               </form>
               <p className="mt-6 text-center text-sm text-slate-500">
                 Already have an account?{" "}

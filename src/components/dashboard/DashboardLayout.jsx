@@ -19,9 +19,9 @@ function DashboardLayout() {
       icon: "sound_detection_dog_barking",
     },
     {
-      key: "predict-disease",
-      label: "Predict Disease",
-      icon: "medical_services",
+      key: "predict",
+      label: "Predict",
+      icon: "analytics",
     },
     {
       key: "prediction-history",
@@ -40,6 +40,7 @@ function DashboardLayout() {
     : location.pathname.includes("/dashboard/dog/edit")
       ? "dogs"
       : location.pathname.split("/")[2] || "overview";
+
   const activePage = menuItems.some((item) => item.key === currentSection)
     ? currentSection
     : "overview";
@@ -62,7 +63,10 @@ function DashboardLayout() {
                 onMenuSelect={handleMenuSelect}
               />
 
-              <section className="min-w-0 flex-1 overflow-y-auto px-4 py-6 md:px-6">
+              <section
+                id="dashboard-scroll-container"
+                className="min-w-0 flex-1 overflow-y-auto px-4 py-6 md:px-6"
+              >
                 <Outlet />
               </section>
             </div>

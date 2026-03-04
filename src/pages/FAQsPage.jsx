@@ -2,7 +2,7 @@ import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import { useMemo, useState } from "react";
 
-function ContactPage() {
+function FAQsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [openFaqId, setOpenFaqId] = useState("prediction");
 
@@ -165,12 +165,6 @@ function ContactPage() {
                 >
                   Contact Support
                 </a>
-                <a
-                  className="inline-flex items-center justify-center rounded-xl border border-slate-600 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800"
-                  href="mailto:canineai@gmail.com"
-                >
-                  Live Chat
-                </a>
               </div>
             </article>
           </section>
@@ -182,4 +176,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+export default FAQsPage;
