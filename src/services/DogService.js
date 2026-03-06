@@ -1,6 +1,15 @@
 import axios from "axios";
 import { normalizeApiError, unwrapApiResponse } from "../utils/apiResponse";
 
+export async function fetchDogsCount() {
+  try {
+    const response = await axios.get("/api/dog/count");
+    return unwrapApiResponse(response, "Unable to fetch dogs count.");
+  } catch (error) {
+    throw normalizeApiError(error, "Unable to fetch dogs count.");
+  }
+}
+
 export async function fetchDogs() {
   try {
     const response = await axios.get("/api/dog");

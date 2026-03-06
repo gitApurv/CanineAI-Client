@@ -3,6 +3,7 @@ import { fetchSymptoms } from "../../services/SymptomService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchDogById, fetchDogs } from "../../services/DogService";
 import ScrollToTop from "../../components/common/ScrollToTop";
+import { predictDisease } from "../../services/PredictionService";
 
 function PredictDiseasePage() {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ function PredictDiseasePage() {
     loadSelectedDog();
   }, [formData.dogId]);
 
-  const handlePredictDisease = () => {
+  const handlePredictDisease = async () => {
     if (!formData.dogId) {
       setErrorMessage("Please select a dog.");
       return;
@@ -151,6 +152,16 @@ function PredictDiseasePage() {
     }
 
     setErrorMessage("");
+
+    const predictionRequestData = {
+      dogId: formData.dogId,
+      symptoms: formData.symptoms,
+      severity: formData.severity,
+      durationDays: formData.durationDays,
+    };
+
+    const predictionResponseData = await predictDisease(predictionRequestData);
+    navigate(`/dashboard/prediction/${predictionResponseData.predictionId}`);
   };
 
   if (!isLoadingData && !dogs.length) {

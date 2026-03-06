@@ -17,6 +17,7 @@ import DogProfilePage from "./pages/dashboard/DogProfilePage";
 import AddDogPage from "./pages/dashboard/AddDogPage";
 import EditDogPage from "./pages/dashboard/EditDogPage";
 import PredictDiseasePage from "./pages/dashboard/PredictDiseasePage";
+import PredictionResultPage from "./pages/dashboard/PredictionResultPage";
 import PredictionHistoryPage from "./pages/dashboard/PredictionHistoryPage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import EditProfilePage from "./pages/dashboard/EditProfilePage";
@@ -68,6 +69,10 @@ function App() {
           <Route path="dogs/edit/:dogId" element={<EditDogPage />} />
           <Route path="predict" element={<PredictDiseasePage />} />
           <Route path="predict/:dogId" element={<PredictDiseasePage />} />
+          <Route
+            path="prediction/:predictionId"
+            element={<PredictionResultPage />}
+          />
           <Route
             path="prediction-history"
             element={<PredictionHistoryPage />}

@@ -1,31 +1,20 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  fetchTop3PredictionHistory,
+  fetchPredictionsCount,
+  fetchLatestPrediction,
+} from "../../services/PredictionService";
+import { fetchDogsCount } from "../../services/DogService";
 
 function DashboardOverviewView() {
   const navigate = useNavigate();
-
-  const recentPredictions = [
-    {
-      dogName: "Max",
-      date: "Oct 24, 2024",
-      disease: "Canine Diabetes",
-      riskLevel: "Low Risk",
-      riskStyle: "bg-emerald-100 text-emerald-700",
-    },
-    {
-      dogName: "Bella",
-      date: "Oct 22, 2024",
-      disease: "Hip Dysplasia",
-      riskLevel: "Medium Risk",
-      riskStyle: "bg-amber-100 text-amber-700",
-    },
-    {
-      dogName: "Rocky",
-      date: "Oct 18, 2024",
-      disease: "Heartworm",
-      riskLevel: "High Risk",
-      riskStyle: "bg-red-100 text-red-700",
-    },
-  ];
+  const [predictionsCount, setPredictionsCount] = useState(0);
+  const [dogsCount, setDogsCount] = useState(0);
+  const [latestPrediction, setLatestPrediction] = useState(null);
+  const [recentPredictions, setRecentPredictions] = useState([]);
+  const [isLoadingRecentPredictions, setIsLoadingRecentPredictions] =
+    useState(true);
 
   const quickActions = [
     {
@@ -51,6 +40,60 @@ function DashboardOverviewView() {
     },
   ];
 
+  useEffect(() => {
+    const loadPredictionsCount = async () => {
+      try {
+        const count = await fetchPredictionsCount();
+        setPredictionsCount(count);
+      } catch (error) {
+        setPredictionsCount(0);
+      }
+    };
+
+    const loadDogsCount = async () => {
+      try {
+        const count = await fetchDogsCount();
+        setDogsCount(count);
+      } catch (error) {
+        setDogsCount(0);
+      }
+    };
+
+    const loadLatestPrediction = async () => {
+      try {
+        const prediction = await fetchLatestPrediction();
+        setLatestPrediction(prediction);
+      } catch (error) {
+        setLatestPrediction(null);
+      }
+    };
+
+    const loadRecentPredictions = async () => {
+      try {
+        setIsLoadingRecentPredictions(true);
+        const recentPredictions = await fetchTop3PredictionHistory();
+        setRecentPredictions(recentPredictions);
+      } catch (error) {
+        setRecentPredictions([]);
+      } finally {
+        setIsLoadingRecentPredictions(false);
+      }
+    };
+
+    loadRecentPredictions();
+    loadPredictionsCount();
+    loadDogsCount();
+    loadLatestPrediction();
+  }, []);
+
+  const formatDateTime = (value) => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return "Unknown date";
+    }
+    return date.toLocaleString();
+  };
+
   return (
     <section className="space-y-7">
       <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
@@ -69,9 +112,8 @@ function DashboardOverviewView() {
             <span className="material-symbols-outlined text-[96px]">pets</span>
           </span>
           <p className="text-sm font-medium text-slate-500">Total Dogs</p>
-          <p className="mt-2 text-5xl font-extrabold text-slate-900">4</p>
-          <p className="mt-3 inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-            ↗ +1 this month
+          <p className="mt-2 text-5xl font-extrabold text-slate-900">
+            {dogsCount}
           </p>
         </article>
 
@@ -84,9 +126,14 @@ function DashboardOverviewView() {
           <p className="text-sm font-medium text-slate-500">
             Total Predictions
           </p>
-          <p className="mt-2 text-5xl font-extrabold text-slate-900">28</p>
+          <p className="mt-2 text-5xl font-extrabold text-slate-900">
+            {predictionsCount}
+          </p>
           <p className="mt-3 text-xs font-medium text-slate-500">
-            Last run: 2 hours ago
+            Last run at:{" "}
+            {latestPrediction?.createdAt
+              ? formatDateTime(latestPrediction.createdAt)
+              : "-"}
           </p>
         </article>
 
@@ -96,20 +143,25 @@ function DashboardOverviewView() {
               health_and_safety
             </span>
           </span>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Latest Prediction Result
           </p>
-          <div className="mt-2 flex items-center gap-2">
-            <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">
-              Low Risk
-            </span>
-            <span className="text-sm font-semibold text-slate-900">
-              for Max
-            </span>
-          </div>
-          <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-full w-[14%] rounded-full bg-emerald-500" />
-          </div>
+          {latestPrediction ? (
+            <div className="mt-3 p-3">
+              <p className="text-lg font-bold text-slate-900">
+                For {latestPrediction.dogName || "Unknown Dog"}
+              </p>
+              <p className="mt-1 text-sm text-slate-700">
+                <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                  {latestPrediction.predictedDiseaseName || "Unknown Disease"}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div className="mt-3 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-3">
+              <p className="text-sm text-slate-500">No prediction found yet.</p>
+            </div>
+          )}
         </article>
       </div>
 
@@ -126,13 +178,20 @@ function DashboardOverviewView() {
                   : "cursor-not-allowed text-slate-300"
               }`}
               disabled={recentPredictions.length === 0}
+              onClick={() => navigate("/dashboard/prediction-history")}
               type="button"
             >
               View All
             </button>
           </div>
 
-          {recentPredictions.length === 0 ? (
+          {isLoadingRecentPredictions ? (
+            <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
+              <p className="text-sm font-medium text-slate-500">
+                Loading recent predictions...
+              </p>
+            </div>
+          ) : recentPredictions.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                 <span className="material-symbols-outlined">history</span>
@@ -150,48 +209,68 @@ function DashboardOverviewView() {
               <table className="min-w-full">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-6 py-3">Date & Time</th>
                     <th className="px-6 py-3">Dog Name</th>
-                    <th className="px-6 py-3">Date</th>
                     <th className="px-6 py-3">Predicted Disease</th>
-                    <th className="px-6 py-3">Risk Level</th>
                     <th className="px-6 py-3 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {recentPredictions.map((prediction) => (
                     <tr
-                      key={`${prediction.dogName}-${prediction.date}`}
-                      className="border-b border-slate-100 text-sm text-slate-700 last:border-b-0"
+                      key={prediction.predictionId}
+                      className="group border-b border-slate-100 text-sm text-slate-700 transition-colors hover:bg-slate-50 last:border-b-0"
                     >
+                      <td className="px-6 py-4">
+                        <p className="font-semibold text-slate-900">
+                          {formatDateTime(prediction.createdAt)}
+                        </p>
+                      </td>
                       <td className="px-6 py-4 font-semibold text-slate-900">
-                        <div className="flex items-center gap-2">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">
-                            {prediction.dogName.charAt(0)}
+                        <div className="flex items-center gap-2.5">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700 ring-1 ring-blue-200">
+                            <span className="material-symbols-outlined text-[16px]">
+                              pets
+                            </span>
                           </span>
-                          {prediction.dogName}
+                          {prediction.dogName || "Unknown Dog"}
                         </div>
                       </td>
-                      <td className="px-6 py-4">{prediction.date}</td>
-                      <td className="px-6 py-4">{prediction.disease}</td>
+
                       <td className="px-6 py-4">
-                        <span
-                          className={`rounded-full px-2 py-1 text-xs font-semibold ${prediction.riskStyle}`}
-                        >
-                          {prediction.riskLevel}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                            {prediction.predictedDiseaseName}
+                          </span>
+                        </div>
                       </td>
+
                       <td className="px-6 py-4 text-right">
                         <button
-                          className="font-semibold text-primary transition-colors hover:text-blue-600"
+                          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold text-primary transition-all hover:bg-blue-50 hover:text-blue-600"
+                          onClick={() =>
+                            navigate(
+                              `/dashboard/prediction/${prediction.predictionId}`,
+                            )
+                          }
                           type="button"
                         >
                           View
+                          <span className="material-symbols-outlined text-[16px]">
+                            arrow_forward
+                          </span>
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+
+              {recentPredictions.length < 3 ? (
+                <div className="border-t border-slate-100 px-6 py-3 text-xs font-medium text-slate-500">
+                  That's all predictions.
+                </div>
+              ) : null}
             </div>
           )}
         </section>

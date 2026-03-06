@@ -39,7 +39,11 @@ function DashboardLayout() {
     ? "dogs"
     : location.pathname.includes("/dashboard/dog/edit")
       ? "dogs"
-      : location.pathname.split("/")[2] || "overview";
+      : location.pathname.includes("/dashboard/prediction-history")
+        ? "prediction-history"
+        : location.pathname.includes("/dashboard/prediction")
+          ? "predict"
+          : location.pathname.split("/")[2] || "overview";
 
   const activePage = menuItems.some((item) => item.key === currentSection)
     ? currentSection

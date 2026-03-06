@@ -1,33 +1,64 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchDogById } from "../../services/DogService";
+import { fetchPredictionsByDogId } from "../../services/PredictionService";
 
 function DogProfilePage() {
   const { dogId } = useParams();
   const [dog, setDog] = useState(null);
+  const [predictions, setPredictions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [predictionsError, setPredictionsError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadDog = async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const data = await fetchDogById(dogId);
-        setDog(data);
-      } catch (error) {
+    const loadDogProfileData = async () => {
+      setLoading(true);
+      setError("");
+      setPredictionsError("");
+
+      const [dogResult, predictionsResult] = await Promise.allSettled([
+        fetchDogById(dogId),
+        fetchPredictionsByDogId(dogId),
+      ]);
+
+      if (dogResult.status === "fulfilled") {
+        setDog(dogResult.value || null);
+      } else {
         const message =
-          error?.message || "Unable to load dog details. Please try again.";
+          dogResult.reason?.message ||
+          "Unable to load dog details. Please try again.";
         setError(message);
         setDog(null);
-      } finally {
-        setLoading(false);
       }
+
+      if (predictionsResult.status === "fulfilled") {
+        const history = Array.isArray(predictionsResult.value)
+          ? predictionsResult.value
+          : [];
+        setPredictions(history);
+      } else {
+        const message =
+          predictionsResult.reason?.message ||
+          "Unable to load dog predictions right now.";
+        setPredictionsError(message);
+        setPredictions([]);
+      }
+
+      setLoading(false);
     };
 
-    loadDog();
+    loadDogProfileData();
   }, [dogId]);
+
+  const formatDateTime = (value) => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return "Unknown date";
+    }
+    return date.toLocaleString();
+  };
 
   if (loading) {
     return (
@@ -175,113 +206,86 @@ function DogProfilePage() {
         </div>
       </article>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-2xl font-bold text-slate-900">
-            Current Health Status
-          </h3>
-          <div className="mt-6 text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-              <span className="material-symbols-outlined">check</span>
-            </span>
-            <p className="mt-3 text-4xl font-extrabold text-emerald-600">
-              Low Risk
-            </p>
-            <p className="text-slate-500">Based on last analysis</p>
-          </div>
-          <div className="mt-5 border-t border-slate-100 pt-4 text-sm text-slate-500">
-            Last Prediction:{" "}
-            <span className="font-semibold text-slate-700">Oct 24, 2024</span>
-          </div>
-        </article>
-
+      <div className="w-full">
         <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <h3 className="text-2xl font-bold text-slate-900">
-              Recent AI Predictions
+              Recent Predictions
             </h3>
-            <button
-              className="text-sm font-semibold text-primary"
-              type="button"
-            >
-              View All
-            </button>
           </div>
           <table className="min-w-full">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
-                <th className="px-5 py-3">Date</th>
+                <th className="px-5 py-3">Date & Time</th>
                 <th className="px-5 py-3">Symptoms</th>
                 <th className="px-5 py-3">Result</th>
                 <th className="px-5 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody>
-              {[
-                {
-                  date: "Oct 24, 2024",
-                  symptoms: "Lethargy, mild cough...",
-                  result: "Healthy",
-                  style: "bg-emerald-100 text-emerald-700",
-                },
-                {
-                  date: "Sep 12, 2024",
-                  symptoms: "Routine checkup data...",
-                  result: "Healthy",
-                  style: "bg-emerald-100 text-emerald-700",
-                },
-                {
-                  date: "Jun 05, 2024",
-                  symptoms: "Limping, loss of app...",
-                  result: "Monitor",
-                  style: "bg-amber-100 text-amber-700",
-                },
-              ].map((row) => (
-                <tr
-                  key={row.date}
-                  className="border-b border-slate-100 text-sm text-slate-700 transition-colors hover:bg-slate-50/70 last:border-b-0"
-                >
-                  <td className="px-5 py-3">{row.date}</td>
-                  <td className="px-5 py-3">{row.symptoms}</td>
-                  <td className="px-5 py-3">
-                    <span
-                      className={`rounded-md px-2 py-1 text-xs font-semibold ${row.style}`}
-                    >
-                      {row.result}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3 text-right">
-                    <button
-                      className="rounded-md px-2 py-1 font-medium text-primary transition-colors hover:bg-blue-50 hover:text-blue-600"
-                      type="button"
-                    >
-                      View Details
-                    </button>
+              {predictionsError ? (
+                <tr>
+                  <td
+                    className="px-5 py-6 text-sm font-medium text-red-600"
+                    colSpan={4}
+                  >
+                    {predictionsError}
                   </td>
                 </tr>
-              ))}
+              ) : null}
+
+              {!predictionsError && predictions.length === 0 ? (
+                <tr>
+                  <td className="px-5 py-6 text-sm text-slate-500" colSpan={4}>
+                    No predictions found for this dog.
+                  </td>
+                </tr>
+              ) : null}
+
+              {!predictionsError
+                ? predictions.map((prediction) => {
+                    return (
+                      <tr
+                        key={prediction?.predictionId}
+                        className="group border-b border-slate-100 text-sm text-slate-700 transition-colors hover:bg-slate-50 last:border-b-0"
+                      >
+                        <td className="px-5 py-3">
+                          <p className="font-semibold text-slate-900">
+                            {formatDateTime(prediction?.createdAt)}
+                          </p>
+                        </td>
+                        <td className="px-5 py-3">
+                          <span className="inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                            {Array.isArray(prediction?.matchedSymptomsName) &&
+                            prediction.matchedSymptomsName.length > 0
+                              ? prediction.matchedSymptomsName.join(", ")
+                              : "No symptoms"}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3">
+                          <span className="inline-flex rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                            {prediction?.predictedDiseaseName ||
+                              "Unknown Disease"}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3 text-right">
+                          <Link
+                            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold text-primary transition-all hover:bg-blue-50 hover:text-blue-600"
+                            to={`/dashboard/prediction/${prediction?.predictionId}`}
+                          >
+                            View Details
+                            <span className="material-symbols-outlined text-[16px]">
+                              arrow_forward
+                            </span>
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })
+                : null}
             </tbody>
           </table>
         </article>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Link
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-          to={`/dashboard/predict/${dogId}`}
-        >
-          <span className="material-symbols-outlined text-[16px]">add</span>
-          Start New Prediction
-        </Link>
-        <button
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition-all hover:-translate-y-0.5 hover:bg-slate-100"
-          type="button"
-        >
-          <span className="material-symbols-outlined text-[16px]">
-            timeline
-          </span>
-          View Full Health Timeline
-        </button>
       </div>
     </section>
   );
