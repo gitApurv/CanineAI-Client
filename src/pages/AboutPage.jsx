@@ -320,10 +320,10 @@ function AboutPage() {
               <h2 className="text-3xl font-extrabold leading-tight text-white md:text-5xl">
                 Ready to start monitoring your dog&apos;s health?
               </h2>
-              <div className="mt-4 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-4 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
                 {isUserLoggedIn ? (
                   <button
-                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[200px]"
                     onClick={() => navigate("/dashboard")}
                     type="button"
                   >
@@ -332,14 +332,14 @@ function AboutPage() {
                 ) : (
                   <>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[200px]"
                       onClick={() => navigate("/signup")}
                       type="button"
                     >
                       Create Account
                     </button>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                      className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:min-w-[200px]"
                       onClick={() => navigate("/login")}
                       type="button"
                     >

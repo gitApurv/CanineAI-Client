@@ -82,9 +82,9 @@ function LandingPage() {
                   </h2>
                 </div>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                   <button
-                    className="flex h-12 min-w-[140px] items-center justify-center overflow-hidden rounded-xl bg-primary px-6 text-base font-bold leading-normal tracking-[0.015em] text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    className="flex h-12 w-full items-center justify-center overflow-hidden rounded-xl bg-primary px-6 text-base font-bold leading-normal tracking-[0.015em] text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:w-auto sm:min-w-[140px]"
                     type="button"
                     onClick={() =>
                       navigate(isUserLoggedIn ? "/dashboard" : "/login")
@@ -96,7 +96,7 @@ function LandingPage() {
                   </button>
 
                   <button
-                    className="flex h-12 min-w-[140px] items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white px-6 text-base font-bold leading-normal tracking-[0.015em] text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="flex h-12 w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white px-6 text-base font-bold leading-normal tracking-[0.015em] text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:w-auto sm:min-w-[140px]"
                     type="button"
                     onClick={() => navigate("/diseases")}
                   >
@@ -230,10 +230,10 @@ function LandingPage() {
                 disease detection and health tracking.
               </p>
 
-              <div className="mt-2 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
                 {isUserLoggedIn ? (
                   <button
-                    className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[200px]"
                     onClick={() => navigate("/dashboard")}
                     type="button"
                   >
@@ -242,14 +242,14 @@ function LandingPage() {
                 ) : (
                   <>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl bg-white px-8 text-lg font-bold leading-normal tracking-[0.015em] text-primary shadow-xl transition-all hover:scale-105 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[200px]"
                       onClick={() => navigate("/signup")}
                       type="button"
                     >
                       Create Account
                     </button>
                     <button
-                      className="flex h-14 min-w-[200px] items-center justify-center overflow-hidden rounded-xl border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                      className="flex h-14 w-full items-center justify-center overflow-hidden rounded-xl border-2 border-white/30 px-8 text-lg font-bold leading-normal tracking-[0.015em] text-white transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:min-w-[200px]"
                       onClick={() => navigate("/login")}
                       type="button"
                     >

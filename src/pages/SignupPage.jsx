@@ -153,7 +153,7 @@ function SignupPage() {
 
         <main className="flex flex-1 pt-[72px]">
           <section className="flex w-full items-center justify-center px-4 py-10">
-            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-8 py-8 shadow-lg shadow-slate-300/40 sm:px-9">
+            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-lg shadow-slate-300/40 sm:px-9">
               <div className="mb-7 text-center">
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                   Create Your Account
@@ -278,7 +278,7 @@ function SignupPage() {
                       </span>
                     </button>
                   </div>
-                  <p className="flex items-center gap-1.5 whitespace-nowrap text-[11px] leading-5 text-slate-500">
+                  <p className="flex items-start gap-1.5 text-[11px] leading-5 text-slate-500">
                     <span className="material-symbols-outlined mt-[1px] text-sm text-slate-400">
                       info
                     </span>

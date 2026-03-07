@@ -104,8 +104,8 @@ function DogProfilePage() {
         </div>
       )}
 
-      <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
-        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+      <header className="rounded-2xl border border-slate-200 bg-white/80 px-5 py-5 shadow-sm backdrop-blur-sm sm:px-7">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           Dog Profile
         </h1>
         <p className="mt-2 text-sm text-slate-500 sm:text-base">
@@ -113,9 +113,9 @@ function DogProfilePage() {
         </p>
       </header>
 
-      <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70">
+      <article className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             {dog?.profileImageUrl ? (
               <img
                 alt={dog?.name || "Dog"}
@@ -128,10 +128,10 @@ function DogProfilePage() {
               </div>
             )}
             <div>
-              <h2 className="text-5xl font-bold text-slate-900">
+              <h2 className="break-words text-3xl font-bold text-slate-900 sm:text-5xl">
                 {dog?.name || "Unknown Dog"}
               </h2>
-              <p className="text-2xl text-slate-500">
+              <p className="break-words text-xl text-slate-500 sm:text-2xl">
                 {dog?.breed || "Unknown Breed"}
               </p>
             </div>
@@ -213,78 +213,144 @@ function DogProfilePage() {
               Recent Predictions
             </h3>
           </div>
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b border-slate-100 bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
-                <th className="px-5 py-3">Date & Time</th>
-                <th className="px-5 py-3">Symptoms</th>
-                <th className="px-5 py-3">Result</th>
-                <th className="px-5 py-3 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {predictionsError ? (
-                <tr>
-                  <td
-                    className="px-5 py-6 text-sm font-medium text-red-600"
-                    colSpan={4}
+          <div className="space-y-3 p-4 md:hidden">
+            {predictionsError ? (
+              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-6 text-sm font-medium text-red-600">
+                {predictionsError}
+              </div>
+            ) : null}
+
+            {!predictionsError && predictions.length === 0 ? (
+              <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-6 text-sm text-slate-500">
+                No predictions found for this dog.
+              </div>
+            ) : null}
+
+            {!predictionsError
+              ? predictions.map((prediction) => (
+                  <article
+                    key={prediction?.predictionId}
+                    className="rounded-xl border border-slate-200 p-4"
                   >
-                    {predictionsError}
-                  </td>
-                </tr>
-              ) : null}
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      Date & Time
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">
+                      {formatDateTime(prediction?.createdAt)}
+                    </p>
 
-              {!predictionsError && predictions.length === 0 ? (
-                <tr>
-                  <td className="px-5 py-6 text-sm text-slate-500" colSpan={4}>
-                    No predictions found for this dog.
-                  </td>
-                </tr>
-              ) : null}
+                    <div className="mt-3 border-t border-slate-100 pt-3">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Symptoms
+                      </p>
+                      <p className="mt-1 text-sm text-slate-700">
+                        {Array.isArray(prediction?.matchedSymptomsName) &&
+                        prediction.matchedSymptomsName.length > 0
+                          ? prediction.matchedSymptomsName.join(", ")
+                          : "No symptoms"}
+                      </p>
+                    </div>
 
-              {!predictionsError
-                ? predictions.map((prediction) => {
-                    return (
-                      <tr
-                        key={prediction?.predictionId}
-                        className="group border-b border-slate-100 text-sm text-slate-700 transition-colors hover:bg-slate-50 last:border-b-0"
-                      >
-                        <td className="px-5 py-3">
-                          <p className="font-semibold text-slate-900">
-                            {formatDateTime(prediction?.createdAt)}
-                          </p>
-                        </td>
-                        <td className="px-5 py-3">
-                          <span className="inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
-                            {Array.isArray(prediction?.matchedSymptomsName) &&
-                            prediction.matchedSymptomsName.length > 0
-                              ? prediction.matchedSymptomsName.join(", ")
-                              : "No symptoms"}
-                          </span>
-                        </td>
-                        <td className="px-5 py-3">
-                          <span className="inline-flex rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
-                            {prediction?.predictedDiseaseName ||
-                              "Unknown Disease"}
-                          </span>
-                        </td>
-                        <td className="px-5 py-3 text-right">
-                          <Link
-                            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold text-primary transition-all hover:bg-blue-50 hover:text-blue-600"
-                            to={`/dashboard/prediction/${prediction?.predictionId}`}
-                          >
-                            View Details
-                            <span className="material-symbols-outlined text-[16px]">
-                              arrow_forward
+                    <div className="mt-3">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Result
+                      </p>
+                      <span className="mt-1 inline-flex rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                        {prediction?.predictedDiseaseName || "Unknown Disease"}
+                      </span>
+                    </div>
+
+                    <Link
+                      className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-primary transition-colors hover:bg-blue-100 hover:text-blue-700"
+                      to={`/dashboard/prediction/${prediction?.predictionId}`}
+                    >
+                      View Details
+                      <span className="material-symbols-outlined text-[16px]">
+                        arrow_forward
+                      </span>
+                    </Link>
+                  </article>
+                ))
+              : null}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
+            <table className="min-w-[760px] w-full">
+              <thead>
+                <tr className="border-b border-slate-100 bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+                  <th className="px-5 py-3">Date & Time</th>
+                  <th className="px-5 py-3">Symptoms</th>
+                  <th className="px-5 py-3">Result</th>
+                  <th className="px-5 py-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {predictionsError ? (
+                  <tr>
+                    <td
+                      className="px-5 py-6 text-sm font-medium text-red-600"
+                      colSpan={4}
+                    >
+                      {predictionsError}
+                    </td>
+                  </tr>
+                ) : null}
+
+                {!predictionsError && predictions.length === 0 ? (
+                  <tr>
+                    <td
+                      className="px-5 py-6 text-sm text-slate-500"
+                      colSpan={4}
+                    >
+                      No predictions found for this dog.
+                    </td>
+                  </tr>
+                ) : null}
+
+                {!predictionsError
+                  ? predictions.map((prediction) => {
+                      return (
+                        <tr
+                          key={prediction?.predictionId}
+                          className="group border-b border-slate-100 text-sm text-slate-700 transition-colors hover:bg-slate-50 last:border-b-0"
+                        >
+                          <td className="px-5 py-3">
+                            <p className="font-semibold text-slate-900">
+                              {formatDateTime(prediction?.createdAt)}
+                            </p>
+                          </td>
+                          <td className="px-5 py-3">
+                            <span className="inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                              {Array.isArray(prediction?.matchedSymptomsName) &&
+                              prediction.matchedSymptomsName.length > 0
+                                ? prediction.matchedSymptomsName.join(", ")
+                                : "No symptoms"}
                             </span>
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
+                          </td>
+                          <td className="px-5 py-3">
+                            <span className="inline-flex rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                              {prediction?.predictedDiseaseName ||
+                                "Unknown Disease"}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <Link
+                              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold text-primary transition-all hover:bg-blue-50 hover:text-blue-600"
+                              to={`/dashboard/prediction/${prediction?.predictionId}`}
+                            >
+                              View Details
+                              <span className="material-symbols-outlined text-[16px]">
+                                arrow_forward
+                              </span>
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
         </article>
       </div>
     </section>

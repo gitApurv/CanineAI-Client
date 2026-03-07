@@ -56,9 +56,9 @@ function ForgotPasswordPage() {
 
         <main className="flex flex-1 pt-[72px]">
           <section className="flex w-full items-center justify-center px-4 py-12">
-            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-8 py-9 shadow-lg shadow-slate-300/40 sm:px-9">
+            <div className="w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-lg shadow-slate-300/40 sm:px-9 sm:py-9">
               <div className="mb-8 text-center">
-                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
                   Forgot Your Password?
                 </h1>
                 <p className="mx-auto mt-2 max-w-[300px] text-sm text-slate-500">

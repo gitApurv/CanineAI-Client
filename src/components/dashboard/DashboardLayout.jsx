@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import Navbar from "../common/Navbar";
@@ -6,6 +7,7 @@ import SideMenu from "./SideMenu";
 function DashboardLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const menuItems = [
     {
@@ -50,26 +52,29 @@ function DashboardLayout() {
     : "overview";
 
   const handleMenuSelect = (selectedKey) => {
+    setIsSidebarOpen(false);
     navigate(`/dashboard/${selectedKey}`);
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-background-light font-display text-slate-900 antialiased">
-      <div className="relative flex h-full w-full flex-col">
-        <Navbar />
+    <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
+      <div className="relative flex min-h-screen w-full flex-col">
+        <Navbar onDashboardMenuToggle={() => setIsSidebarOpen(true)} />
 
         <div className="flex min-h-0 flex-1 flex-col pt-[72px]">
           <main className="flex min-h-0 flex-1 overflow-hidden">
-            <div className="flex w-full min-h-0 flex-1">
+            <div className="flex min-h-0 w-full flex-1">
               <SideMenu
                 activePage={activePage}
+                isOpen={isSidebarOpen}
                 menuItems={menuItems}
+                onClose={() => setIsSidebarOpen(false)}
                 onMenuSelect={handleMenuSelect}
               />
 
               <section
                 id="dashboard-scroll-container"
-                className="min-w-0 flex-1 overflow-y-auto px-4 py-6 md:px-6"
+                className="min-w-0 flex-1 overflow-y-auto px-4 py-6 md:px-6 lg:px-8"
               >
                 <Outlet />
               </section>

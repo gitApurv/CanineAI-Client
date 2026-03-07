@@ -76,7 +76,7 @@ function FAQsPage() {
         <main className="flex-1 pt-[72px]">
           <section className="px-4 pb-12 pt-14 text-center">
             <div className="mx-auto max-w-4xl">
-              <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                 Frequently Asked Questions
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-500 sm:text-lg">

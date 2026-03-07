@@ -42,7 +42,7 @@ function ProfilePage() {
   return (
     <section className="space-y-8">
       <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-8">
-        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           My Profile
         </h1>
         <p className="mt-2 max-w-2xl text-slate-500">

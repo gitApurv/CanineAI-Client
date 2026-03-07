@@ -62,7 +62,7 @@ function PredictionResultPage() {
         <ScrollToTop />
         <section className="space-y-7">
           <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
               Prediction Result
             </h1>
             <p className="mt-2 text-sm text-slate-500 sm:text-base">
@@ -89,7 +89,7 @@ function PredictionResultPage() {
         <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
                 Prediction Result
               </h1>
               <p className="mt-2 text-sm text-slate-500 sm:text-base">

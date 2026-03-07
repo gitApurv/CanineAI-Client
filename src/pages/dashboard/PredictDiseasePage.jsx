@@ -170,7 +170,7 @@ function PredictDiseasePage() {
         <ScrollToTop />
         <section className="space-y-7">
           <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
               Predict Disease
             </h1>
           </header>
@@ -200,7 +200,7 @@ function PredictDiseasePage() {
       <ScrollToTop />
       <section className="space-y-7">
         <header className="rounded-2xl border border-slate-200 bg-white/80 px-6 py-5 shadow-sm backdrop-blur-sm sm:px-7">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
             Predict Disease
           </h1>
           <p className="mt-2 text-sm text-slate-500 sm:text-base">
@@ -248,7 +248,7 @@ function PredictDiseasePage() {
               </div>
 
               {dog ? (
-                <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                <div className="flex flex-col items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-primary">
                     {dog?.profileImageUrl ? (
                       <img
@@ -263,7 +263,7 @@ function PredictDiseasePage() {
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">
+                    <p className="break-words text-sm font-semibold text-slate-900">
                       {dog?.name} ({dog?.breed})
                     </p>
                     <p className="text-xs text-slate-500">
@@ -333,7 +333,7 @@ function PredictDiseasePage() {
                 How severe are the symptoms?
               </p>
 
-              <div className="grid grid-cols-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 text-sm">
+              <div className="grid grid-cols-1 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 text-sm sm:grid-cols-3">
                 <button
                   className={`px-4 py-2.5 font-medium ${
                     formData.severity === "MILD"
@@ -346,7 +346,7 @@ function PredictDiseasePage() {
                   Mild
                 </button>
                 <button
-                  className={`border-x border-slate-200 px-4 py-2.5 font-semibold ${
+                  className={`border-y border-slate-200 px-4 py-2.5 font-semibold sm:border-x sm:border-y-0 ${
                     formData.severity === "MODERATE"
                       ? "bg-white text-slate-900"
                       : "text-slate-600"
@@ -383,7 +383,7 @@ function PredictDiseasePage() {
                 How long have symptoms persisted? (Days)
               </p>
 
-              <div className="max-w-[280px] rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 focus-within:border-primary focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/15">
+              <div className="w-full max-w-[280px] rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 focus-within:border-primary focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/15">
                 <div className="flex items-center gap-2">
                   <input
                     className="w-full border-0 bg-transparent p-0 text-sm text-slate-900 outline-none placeholder:text-slate-400"
@@ -409,9 +409,9 @@ function PredictDiseasePage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3">
+            <div className="flex flex-col-reverse items-stretch justify-end gap-3 sm:flex-row sm:items-center">
               <button
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
                 type="button"
                 onClick={handlePredictDisease}
               >
