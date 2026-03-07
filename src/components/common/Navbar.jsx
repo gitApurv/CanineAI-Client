@@ -36,8 +36,11 @@ function Navbar() {
         to="/"
         className="group flex items-center gap-3 rounded-xl px-1 py-1 text-slate-900 transition-all duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
       >
-        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15 transition-transform duration-200 group-hover:scale-105">
-          <span className="material-symbols-outlined text-3xl">pets</span>
+        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary  ring-primary/15 transition-transform duration-200 group-hover:scale-105">
+          <img
+            src="https://res.cloudinary.com/cloudapurv/image/upload/v1772861361/tqkpqllozdjlhmo7ddqf.webp"
+            alt="Canine AI Logo"
+          />
         </div>
         <h2 className="text-lg font-bold leading-tight tracking-[-0.015em]">
           Canine AI

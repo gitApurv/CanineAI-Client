@@ -165,7 +165,7 @@ function AboutPage() {
                     <img
                       alt="Veterinarian examining a dog"
                       className="h-full w-full object-cover"
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7aJby5_XfJ83FuTeKgxXC87JHK0-YKqcd9k2m_rPZ7Tdj7AjvlwdB8gDBFelnz2y-0fqhJO_4qQRlFiKYKJEJmSGS5rHzLKW0VOEuFS1vFlxpqVJkR2K6lskRuPRsGjATRUDCKVrA9Mw6n72XarcxCfGa0QjD_463qDJceOTozTnQVgCxed7Yy6IkfaJ7Wu9RepQ7l4FTsCTzsIFSEMYlT-mbhTk-F5xeFKgnlXBqMLjUDZCjuRO3sjvizufU_QeVZXsFeNBOT6H"
+                      src="https://res.cloudinary.com/cloudapurv/image/upload/v1772862056/hraho8yrfdhgiqnr5bis.png"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
 

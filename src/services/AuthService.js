@@ -1,7 +1,9 @@
 import axios from "axios";
 import { normalizeApiError, unwrapApiResponse } from "../utils/apiResponse";
 
-const AUTH_BASE_URL = "/api/auth";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const AUTH_BASE_URL = `${API_BASE_URL}/api/auth`;
 
 async function getAuth(path) {
   try {

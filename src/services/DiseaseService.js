@@ -1,9 +1,11 @@
 import axios from "axios";
 import { normalizeApiError, unwrapApiResponse } from "../utils/apiResponse";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function fetchDiseases() {
   try {
-    const response = await axios.get("/api/diseases");
+    const response = await axios.get(`${API_BASE_URL}/api/diseases`);
     const data = unwrapApiResponse(response, "Unable to load diseases.");
     return Array.isArray(data) ? data : [];
   } catch (error) {
@@ -13,7 +15,9 @@ export async function fetchDiseases() {
 
 export async function fetchDiseaseById(diseaseId) {
   try {
-    const response = await axios.get(`/api/diseases/${diseaseId}`);
+    const response = await axios.get(
+      `${API_BASE_URL}/api/diseases/${diseaseId}`,
+    );
     return unwrapApiResponse(response, "Unable to load disease detail.");
   } catch (error) {
     throw normalizeApiError(error, "Unable to load disease detail.");

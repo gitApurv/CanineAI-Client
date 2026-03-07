@@ -23,7 +23,7 @@ function DiseasesGrid({ diseases }) {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {diseases.map((disease) => (
-        <DiseaseCard key={disease.id} disease={disease} />
+        <DiseaseCard key={disease.diseaseId} disease={disease} />
       ))}
     </div>
   );
