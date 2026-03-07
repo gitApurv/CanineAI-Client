@@ -161,7 +161,7 @@ function FAQsPage() {
               <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                 <a
                   className="inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-blue-600"
-                  href="mailto:canineai@gmail.com"
+                  href="mailto:official.canineai@gmail.com"
                 >
                   Contact Support
                 </a>

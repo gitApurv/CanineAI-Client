@@ -103,11 +103,7 @@ function AboutPage() {
         <Navbar />
 
         <main className="flex-1 pt-[72px]">
-          <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-16 lg:py-24">
-            <div className="absolute inset-0 bg-blue-50/40"></div>
-            <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary/10 blur-3xl"></div>
-            <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl"></div>
-
+          <section className="relative overflow-hidden bg-slate-50 py-16 lg:py-24">
             <div className="relative mx-auto max-w-[1440px] px-4 text-center lg:px-40">
               <span className="mb-5 inline-block rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
                 Our Mission
@@ -125,9 +121,6 @@ function AboutPage() {
           </section>
 
           <section className="relative overflow-hidden border-t border-slate-200/80 bg-white py-20">
-            <div className="absolute -right-40 -top-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl"></div>
-            <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-teal-200/20 blur-3xl"></div>
-
             <div className="relative mx-auto max-w-[1440px] px-4 lg:px-40">
               <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
                 <div className="px-1 md:px-2 lg:pr-6">
@@ -165,7 +158,7 @@ function AboutPage() {
                     <img
                       alt="Veterinarian examining a dog"
                       className="h-full w-full object-cover"
-                      src="https://res.cloudinary.com/cloudapurv/image/upload/v1772862056/hraho8yrfdhgiqnr5bis.png"
+                      src="https://res.cloudinary.com/cloudapurv/image/upload/v1772895180/ntrsp1vytay8zjgoo0ln.png"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
 

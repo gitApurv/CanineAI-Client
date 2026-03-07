@@ -58,7 +58,7 @@ function Navbar({ onDashboardMenuToggle = null }) {
           >
             <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-primary/15 transition-transform duration-200 group-hover:scale-105">
               <img
-                src="https://res.cloudinary.com/cloudapurv/image/upload/v1772861361/tqkpqllozdjlhmo7ddqf.webp"
+                src="https://res.cloudinary.com/cloudapurv/image/upload/v1772895179/cfjjsabc6wytcyh70fzw.webp"
                 alt="Canine AI Logo"
               />
             </div>

@@ -151,7 +151,7 @@ function PredictionResultPage() {
                 {predictionResult?.predictedDiseaseName || "Unknown Disease"}
               </h2>
 
-              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+              <p className="mt-3 text-base leading-7 text-slate-600">
                 {predictionResult?.predictedDiseaseOverview ||
                   "Prevention tips for this prediction are listed below."}
               </p>

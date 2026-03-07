@@ -52,7 +52,7 @@ function ProfilePage() {
 
       <div className="mx-auto w-full max-w-[820px] space-y-5">
         <article className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm shadow-slate-200/60">
-          <div className="bg-gradient-to-b from-blue-50/60 to-white px-6 py-8 text-center sm:px-10 sm:py-10">
+          <div className="px-6 py-8 text-center sm:px-10 sm:py-10">
             {currentUserDetails?.profilePictureUrl ? (
               <img
                 alt={currentUserDetails.name}
