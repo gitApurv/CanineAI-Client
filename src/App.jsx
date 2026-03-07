@@ -82,20 +82,11 @@ function App() {
           <Route path="profile/password" element={<ChangePasswordPage />} />
           <Route path="*" element={<Navigate replace to="overview" />} />
         </Route>
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/login"
           element={
             <PublicOnlyRoute>
               <LoginPage />
-            </PublicOnlyRoute>
-          }
-        />
-        <Route
-          path="/reset-password"
-          element={
-            <PublicOnlyRoute>
-              <ResetPasswordPage />
             </PublicOnlyRoute>
           }
         />

@@ -59,7 +59,11 @@ function DashboardLayout() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background-light font-display text-slate-900 antialiased">
       <div className="relative flex min-h-screen w-full flex-col">
-        <Navbar onDashboardMenuToggle={() => setIsSidebarOpen(true)} />
+        <Navbar
+          onDashboardMenuToggle={() =>
+            setIsSidebarOpen((currentValue) => !currentValue)
+          }
+        />
 
         <div className="flex min-h-0 flex-1 flex-col pt-[72px]">
           <main className="flex min-h-0 flex-1 overflow-hidden">

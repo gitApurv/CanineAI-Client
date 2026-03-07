@@ -148,12 +148,6 @@ function LoginPage() {
               </form>
 
               <div className="mt-6 space-y-4 text-center text-sm">
-                <Link
-                  className="font-medium text-primary transition-colors hover:text-blue-600"
-                  to="/forgot-password"
-                >
-                  Forgot Password?
-                </Link>
                 <p className="text-slate-500">
                   Don&apos;t have an account?{" "}
                   <Link

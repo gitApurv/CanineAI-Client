@@ -117,7 +117,7 @@ function LandingPage() {
                   <img
                     alt="Golden retriever dog with stethoscope looking healthy"
                     className="h-full w-full object-cover object-top"
-                    src="https://res.cloudinary.com/cloudapurv/image/upload/v1772861999/dadvoiuk08vzze8azbdv.png"
+                    src="https://res.cloudinary.com/cloudapurv/image/upload/v1772895217/wqsp1zgc2eaicfjvyc6t.png"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent"></div>
                   <div className="hero-tooltip hero-tooltip--top absolute left-6 top-6 flex items-center gap-3 rounded-xl bg-white/95 p-3.5 shadow-xl backdrop-blur-sm">
