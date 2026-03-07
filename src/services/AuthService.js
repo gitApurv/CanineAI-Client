@@ -1,11 +1,11 @@
-import axios from "axios";
+import httpClient from "./httpClient";
 import { normalizeApiError, unwrapApiResponse } from "../utils/apiResponse";
 
 const AUTH_BASE_URL = "/api/auth";
 
 async function getAuth(path) {
   try {
-    const response = await axios.get(`${AUTH_BASE_URL}${path}`);
+    const response = await httpClient.get(`${AUTH_BASE_URL}${path}`);
     return unwrapApiResponse(response);
   } catch (error) {
     throw normalizeApiError(error);
@@ -14,7 +14,7 @@ async function getAuth(path) {
 
 async function postAuth(path, payload = {}) {
   try {
-    const response = await axios.post(`${AUTH_BASE_URL}${path}`, payload);
+    const response = await httpClient.post(`${AUTH_BASE_URL}${path}`, payload);
     return unwrapApiResponse(response);
   } catch (error) {
     throw normalizeApiError(error);

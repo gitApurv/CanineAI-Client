@@ -1,9 +1,9 @@
-import axios from "axios";
+import httpClient from "./httpClient";
 import { unwrapApiResponse, normalizeApiError } from "../utils/apiResponse";
 
 export async function fetchPredictionsCount() {
   try {
-    const response = await axios.get(`/api/predict/count`);
+    const response = await httpClient.get(`/api/predict/count`);
     const data = unwrapApiResponse(
       response,
       "Unable to fetch predictions count.",
@@ -16,7 +16,7 @@ export async function fetchPredictionsCount() {
 
 export async function fetchLatestPrediction() {
   try {
-    const response = await axios.get(`/api/predict/latest`);
+    const response = await httpClient.get(`/api/predict/latest`);
     const data = unwrapApiResponse(
       response,
       "Unable to fetch latest prediction.",
@@ -29,7 +29,7 @@ export async function fetchLatestPrediction() {
 
 export async function predictDisease(predictionRequestData) {
   try {
-    const response = await axios.post(
+    const response = await httpClient.post(
       `/api/predict`,
       predictionRequestData,
     );
@@ -42,9 +42,7 @@ export async function predictDisease(predictionRequestData) {
 
 export async function fetchPredictionById(predictionId) {
   try {
-    const response = await axios.get(
-      `/api/predict/${predictionId}`,
-    );
+    const response = await httpClient.get(`/api/predict/${predictionId}`);
     const data = unwrapApiResponse(response, "Unable to fetch prediction.");
     return data;
   } catch (error) {
@@ -54,7 +52,7 @@ export async function fetchPredictionById(predictionId) {
 
 export async function fetchTop3PredictionHistory() {
   try {
-    const response = await axios.get(`/api/predict/top3`);
+    const response = await httpClient.get(`/api/predict/top3`);
     const data = unwrapApiResponse(
       response,
       "Unable to fetch top 3 prediction history.",
@@ -67,7 +65,7 @@ export async function fetchTop3PredictionHistory() {
 
 export async function fetchPredictionHistory() {
   try {
-    const response = await axios.get(`/api/predict`);
+    const response = await httpClient.get(`/api/predict`);
     const data = unwrapApiResponse(
       response,
       "Unable to fetch prediction history.",
@@ -80,9 +78,7 @@ export async function fetchPredictionHistory() {
 
 export async function fetchPredictionsByDogId(dogId) {
   try {
-    const response = await axios.get(
-      `/api/predict/dog/${dogId}`,
-    );
+    const response = await httpClient.get(`/api/predict/dog/${dogId}`);
     const data = unwrapApiResponse(
       response,
       "Unable to fetch dog prediction history.",

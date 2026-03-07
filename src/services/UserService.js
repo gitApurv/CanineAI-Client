@@ -1,9 +1,9 @@
-import axios from "axios";
+import httpClient from "./httpClient";
 import { normalizeApiError, unwrapApiResponse } from "../utils/apiResponse";
 
 export async function getCurrentUser() {
   try {
-    const response = await axios.get(`/api/user`);
+    const response = await httpClient.get(`/api/user`);
     const data = unwrapApiResponse(response, "Unable to load user details.");
     return data;
   } catch (error) {
@@ -13,7 +13,7 @@ export async function getCurrentUser() {
 
 export async function updateCurrentUser(userData) {
   try {
-    const response = await axios.put(`/api/user`, userData);
+    const response = await httpClient.put(`/api/user`, userData);
     const data = unwrapApiResponse(response, "Unable to update profile.");
     return data;
   } catch (error) {
@@ -23,7 +23,7 @@ export async function updateCurrentUser(userData) {
 
 export async function changePassword(payload) {
   try {
-    const response = await axios.post(`/api/user`, payload);
+    const response = await httpClient.post(`/api/user`, payload);
     unwrapApiResponse(response, "Unable to change password.");
   } catch (error) {
     throw normalizeApiError(error, "Unable to change password.");
