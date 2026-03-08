@@ -12,6 +12,7 @@ function PredictDiseasePage() {
   const [dog, setDog] = useState(null);
   const [symptoms, setSymptoms] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmittingPrediction, setIsSubmittingPrediction] = useState(false);
   const { dogId } = useParams();
   const isDogSelectionLocked = Boolean(dogId);
   const [formData, setFormData] = useState({
@@ -131,6 +132,10 @@ function PredictDiseasePage() {
   }, [formData.dogId]);
 
   const handlePredictDisease = async () => {
+    if (isSubmittingPrediction) {
+      return;
+    }
+
     if (!formData.dogId) {
       setErrorMessage("Please select a dog.");
       return;
@@ -152,6 +157,7 @@ function PredictDiseasePage() {
     }
 
     setErrorMessage("");
+    setIsSubmittingPrediction(true);
 
     const predictionRequestData = {
       dogId: formData.dogId,
@@ -160,8 +166,17 @@ function PredictDiseasePage() {
       durationDays: formData.durationDays,
     };
 
-    const predictionResponseData = await predictDisease(predictionRequestData);
-    navigate(`/dashboard/prediction/${predictionResponseData.predictionId}`);
+    try {
+      const predictionResponseData = await predictDisease(
+        predictionRequestData,
+      );
+      navigate(`/dashboard/prediction/${predictionResponseData.predictionId}`);
+    } catch (error) {
+      setErrorMessage(
+        "Unable to predict disease right now. Please try again in a moment.",
+      );
+      setIsSubmittingPrediction(false);
+    }
   };
 
   if (!isLoadingData && !dogs.length) {
@@ -411,14 +426,19 @@ function PredictDiseasePage() {
 
             <div className="flex flex-col-reverse items-stretch justify-end gap-3 sm:flex-row sm:items-center">
               <button
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-blue-600"
+                className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all ${
+                  isSubmittingPrediction
+                    ? "cursor-not-allowed bg-blue-300 shadow-blue-200"
+                    : "bg-primary shadow-primary/30 hover:-translate-y-0.5 hover:bg-blue-600"
+                }`}
                 type="button"
                 onClick={handlePredictDisease}
+                disabled={isSubmittingPrediction}
               >
                 <span className="material-symbols-outlined text-[16px]">
                   neurology
                 </span>
-                Predict Disease
+                {isSubmittingPrediction ? "Predicting..." : "Predict Disease"}
               </button>
               {isDogSelectionLocked ? (
                 <button
