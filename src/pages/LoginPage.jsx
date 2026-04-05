@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import { loginUser } from "../services/AuthService";
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/AuthContext";
 
 function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
