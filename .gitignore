@@ -27,5 +27,3 @@ layouts
 
 
 .env
-.dockerignore
-Dockerfile
