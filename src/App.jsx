@@ -22,7 +22,12 @@ import EditProfilePage from "./pages/dashboard/EditProfilePage";
 import ChangePasswordPage from "./pages/dashboard/ChangePasswordPage";
 
 function ProtectedRoute({ children }) {
-  const { isUserLoggedIn } = useAuth();
+  const { isUserLoggedIn, isValidating } = useAuth();
+
+  // While validating session, don't redirect yet
+  if (isValidating) {
+    return null; // or you can show a loading spinner here
+  }
 
   if (!isUserLoggedIn) {
     return <Navigate replace to="/login" />;
@@ -32,7 +37,12 @@ function ProtectedRoute({ children }) {
 }
 
 function PublicOnlyRoute({ children }) {
-  const { isUserLoggedIn } = useAuth();
+  const { isUserLoggedIn, isValidating } = useAuth();
+
+  // While validating, don't redirect yet
+  if (isValidating) {
+    return null;
+  }
 
   if (isUserLoggedIn) {
     return <Navigate replace to="/dashboard/overview" />;

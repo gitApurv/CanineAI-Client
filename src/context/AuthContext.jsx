@@ -1,34 +1,38 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import httpClient from "../services/httpClient";
 
 const AuthContext = createContext(undefined);
-const AUTH_STORAGE_KEY = "canineai_is_user_logged_in";
-
-function readStoredAuthState() {
-  try {
-    return localStorage.getItem(AUTH_STORAGE_KEY) === "true";
-  } catch (error) {
-    console.warn("Failed to read auth state from localStorage:", error);
-    return false;
-  }
-}
 
 export function AuthProvider({ children }) {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(readStoredAuthState);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(null); 
+  const [isValidating, setIsValidating] = useState(true);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(AUTH_STORAGE_KEY, String(isUserLoggedIn));
-    } catch (error) {
-      console.warn("Failed to persist auth state to localStorage:", error);
-    }
-  }, [isUserLoggedIn]);
+    const validateSession = async () => {
+      try {
+        const response = await httpClient.get("/api/user/logged-in");
+        if (response.data?.data === true) {
+          setIsUserLoggedIn(true);
+        } else {
+          setIsUserLoggedIn(false);
+        }
+      } catch (error) {
+        setIsUserLoggedIn(false);
+      } finally {
+        setIsValidating(false);
+      }
+    };
+
+    validateSession();
+  }, []);
 
   const value = useMemo(
     () => ({
       isUserLoggedIn,
       setIsUserLoggedIn,
+      isValidating,
     }),
-    [isUserLoggedIn],
+    [isUserLoggedIn, isValidating],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
