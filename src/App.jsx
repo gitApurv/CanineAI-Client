@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/useAuth";
 import AboutPage from "./pages/AboutPage";
 import FAQsPage from "./pages/FAQsPage";
 import DiseaseDetailPage from "./pages/DiseaseDetailPage";
