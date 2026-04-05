@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import DynamicInfoCard from "../components/common/DynamicInfoCard";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 
 const featureItems = [
   {
