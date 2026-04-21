@@ -46,7 +46,7 @@ export async function loginUser({ email, password }) {
   return postAuth("/login", { email, password });
 }
 
-export async function logoutUser(payload = {}) {
+export async function logoutUser() {
   return getAuth("/logout");
 }
 

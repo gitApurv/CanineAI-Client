@@ -24,9 +24,8 @@ import ChangePasswordPage from "./pages/dashboard/ChangePasswordPage";
 function ProtectedRoute({ children }) {
   const { isUserLoggedIn, isValidating } = useAuth();
 
-  // While validating session, don't redirect yet
   if (isValidating) {
-    return null; // or you can show a loading spinner here
+    return null;
   }
 
   if (!isUserLoggedIn) {
@@ -39,7 +38,6 @@ function ProtectedRoute({ children }) {
 function PublicOnlyRoute({ children }) {
   const { isUserLoggedIn, isValidating } = useAuth();
 
-  // While validating, don't redirect yet
   if (isValidating) {
     return null;
   }

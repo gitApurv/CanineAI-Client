@@ -4,7 +4,7 @@ import httpClient from "../services/httpClient";
 const AuthContext = createContext(undefined);
 
 export function AuthProvider({ children }) {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(null); 
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
   const [isValidating, setIsValidating] = useState(true);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
         } else {
           setIsUserLoggedIn(false);
         }
-      } catch (error) {
+      } catch {
         setIsUserLoggedIn(false);
       } finally {
         setIsValidating(false);
