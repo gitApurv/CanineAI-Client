@@ -66,12 +66,12 @@ require_command docker
 require_command git
 
 if [[ -z "$docker_username" ]]; then
-  echo "Docker username is required. Pass --docker-username or set DOCKERHUB_USERNAME." >&2
+  echo "Docker username is required. Pass --docker-username." >&2
   exit 1
 fi
 
 if [[ -z "$docker_token" ]]; then
-  echo "Docker Hub token is required. Pass --docker-token or set DOCKERHUB_TOKEN." >&2
+  echo "Docker Hub token is required. Pass --docker-token." >&2
   exit 1
 fi
 
