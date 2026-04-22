@@ -11,10 +11,6 @@ vite_cloudinary_upload_preset=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --image-name)
-      image_name="${2:-}"
-      shift 2
-      ;;
     --docker-username)
       docker_username="${2:-}"
       shift 2
@@ -40,7 +36,6 @@ while [[ $# -gt 0 ]]; do
 Usage: ./scripts/push-dockerhub.sh [options]
 
 Options:
-  --image-name NAME
   --docker-username USERNAME
   --docker-token TOKEN
   --vite-api-base-url URL
